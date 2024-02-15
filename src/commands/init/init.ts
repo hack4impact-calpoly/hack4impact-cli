@@ -15,11 +15,9 @@ export async function initProject() {
                 name: 'projectName',
                 message: 'Project name:',
                 validate: (input) => {
-                    // Basic validation: check if input is non-empty and a valid directory name
                     if (input.length === 0) {
                         return 'Project name cannot be empty.';
                     } else if (/^[\w-]+$/.test(input)) {
-                        // Check if directory already exists
                         if (fs.existsSync(input)) {
                             return 'A directory with this name already exists.';
                         }
@@ -30,15 +28,27 @@ export async function initProject() {
             },
             selectGitHubTemplate.prompt,
         ])
-        .then((answers) => {
-            const projectName = answers.projectName;
-            const projectPath = path.join(process.cwd(), projectName);
+        .then(async (answers) => {
+            try {
+                const projectName = answers.projectName;
+                const projectPath = path.join(process.cwd(), projectName);
+                const configPath = path.join(projectPath, '.hack4impactrc');
+                const defaultConfig = { projectName, projectPath };
 
-            selectGitHubTemplate.then(answers, projectName, projectPath);
+                if (!fs.existsSync(projectPath)) {
+                    fs.mkdirSync(projectPath, { recursive: true });
+                }
 
-            console.log(`Project ${projectName} initialized successfully.`);
+                await selectGitHubTemplate.action(answers, projectName, projectPath);
+
+                fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2), 'utf-8');
+                console.log(`Config file .hack4impactrc created in ${configPath}\n`);
+                console.log(`Project ${projectName} initialized successfully.`);
+            } catch (error) {
+                console.error('Failed to initialize project:', error);
+            }
         })
         .catch((error) => {
-            console.error('Failed to initialize project:', error);
+            console.error('Failed to prompt:', error);
         });
 }

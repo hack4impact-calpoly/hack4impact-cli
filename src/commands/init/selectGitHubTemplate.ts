@@ -1,6 +1,7 @@
-import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import execAsync from 'utils/exec-async';
+
 
 const templates = [
     { name: 'NextJS', url: 'https://github.com/hack4impact-calpoly/nextjs-app-template.git' },
@@ -14,29 +15,26 @@ const prompt = {
     choices: templates.map((t) => t.name),
 };
 
-const then = (answers: { template: string }, projectName: string, projectPath: string) => {
+const action = async (answers: { template: string }, projectName: string, projectPath: string): Promise<void> => {
     const { url } = templates.find((t) => t.name === answers.template) || {};
     if (url) {
         if (url === 'None') {
             createDefaultTemplate(projectName, projectPath);
         } else {
-            cloneTemplate(url, projectName);
+            await cloneTemplate(url, projectName);
         }
     } else {
         console.error('Invalid template selected.');
     }
 };
 
-function cloneTemplate(githubUrl: string, projectName: string): void {
+async function cloneTemplate(githubUrl: string, projectName: string): Promise<void> {
     console.log(`Cloning template from ${githubUrl} into ${projectName}...`);
-
-    exec(`git clone ${githubUrl} ${projectName}`, (error) => {
-        if (error) {
-            console.error(`Error cloning repository: ${error.message}`);
-            return;
-        }
-        console.log(`Repository cloned into ${projectName}`);
-    });
+    const { stdout, stderr } = await execAsync(`git clone ${githubUrl} ${projectName}`);
+    console.log(stdout);
+    if (stderr) {
+        console.error(stderr);
+    }
 }
 
 function createDefaultTemplate(projectName: string, projectPath: string) {
@@ -48,4 +46,4 @@ function createDefaultTemplate(projectName: string, projectPath: string) {
     fs.writeFileSync(path.join(projectPath, 'config.json'), '{}');
 }
 
-export default { prompt, then };
+export default { prompt, action };
