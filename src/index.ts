@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import { initProject } from './commands/init';
+import { initProject } from './commands/init/init';
 
 program.name('hack4impact').description('CLI to initialize and set up volunteer management systems');
 
