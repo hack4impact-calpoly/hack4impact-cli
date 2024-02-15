@@ -12,3 +12,4 @@ node_modules/
 
 # Directory where you can run the cli
 demo/*
+!demo/README.md
