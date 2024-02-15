@@ -16,8 +16,12 @@
         "start": "node ./dist/index.js",
         "build": "tsup",
         "test": "echo \"Error: no test specified\" && exit 1",
+        "prettier": "prettier --write",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts",
         "prepare": "husky"
+    },
+    "engines": {
+        "node": ">=18.15.0"
     },
     "repository": {
         "type": "git",
@@ -53,6 +57,9 @@
         }
     },
     "lint-staged": {
-        "*": "prettier --write"
+        "src/*": [
+            "npm run prettier",
+            "npm run lint"
+        ]
     }
 }
