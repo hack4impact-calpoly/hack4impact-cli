@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import { initProject } from './initProject.js';
+import { initProject } from './initProject';
 
 program
   .name("hack4impact")
