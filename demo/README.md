@@ -2,3 +2,5 @@ This demo directory has already been linked to the hack4impact project via `npm 
 
 You can run the cli in here to demo it.
 To get started, try `hack4impact init`
+
+If you've made local changes to the package but they're not being updated, make sure you go to root directory and run `npm run build` after each time you make changes.
