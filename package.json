@@ -1,0 +1,23 @@
+{
+  "name": "hack4impact",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hack4impact-calpoly/cli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hack4impact-calpoly/cli/issues"
+  },
+  "homepage": "https://github.com/hack4impact-calpoly/cli#readme",
+  "dependencies": {
+    "commander": "^12.0.0",
+    "inquirer": "^9.2.14"
+  }
+}
