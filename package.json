@@ -2,15 +2,20 @@
   "name": "hack4impact",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
+  "bin": {
+    "hack4impact": "./index.js"
+  },
   "scripts": {
+    "start": "node index.js",
     "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hack4impact-calpoly/cli.git"
   },
-  "author": "",
+  "author": "Josh Wong (ObjectJosh)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/hack4impact-calpoly/cli/issues"

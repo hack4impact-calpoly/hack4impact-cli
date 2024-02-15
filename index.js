@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
-const { program } = require('commander');
+import { program } from 'commander';
+import { initProject } from './initProject.js';
 
 program
-  .name("hack4impact-cli")
+  .name("hack4impact")
   .description("CLI to initialize and set up volunteer management systems");
 
 program.command('init')
@@ -13,11 +14,6 @@ program.command('init')
 program.command('add-db')
   .description('Add a database to the project')
   .action(addDatabase);
-
-function initProject() {
-  console.log('Initializing a new project...');
-  // Clone boilerplate, setup project structure, etc.
-}
 
 function addDatabase() {
   console.log('Adding a database...');
