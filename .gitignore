@@ -1,1 +1,12 @@
 test/*
+node_modules/
+/lib
+.DS_Store
+# .env
+
+# Ignore test-related files
+/coverage.data
+/coverage/
+
+# Build files
+/dist
