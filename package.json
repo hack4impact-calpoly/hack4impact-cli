@@ -21,18 +21,18 @@
         "prepare": "husky"
     },
     "engines": {
-        "node": ">=18.15.0"
+        "node": ">=20.0.0"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/hack4impact-calpoly/cli.git"
+        "url": "git+https://github.com/hack4impact-calpoly/hack4impact-cli.git"
     },
     "author": "Josh Wong (ObjectJosh)",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/hack4impact-calpoly/cli/issues"
+        "url": "https://github.com/hack4impact-calpoly/hack4impact-cli/issues"
     },
-    "homepage": "https://github.com/hack4impact-calpoly/cli#readme",
+    "homepage": "https://github.com/hack4impact-calpoly/hack4impact-cli#readme",
     "dependencies": {
         "commander": "^12.0.0",
         "inquirer": "^9.2.14"
