@@ -1,10 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 
+// Check if the .hack4impactrc file exists in the current directory
+export function hack4ImpactRcExists(): string | false {
+    const filePath = path.join(process.cwd(), '.hack4impactrc');
+    if (!fs.existsSync(filePath)) {
+        return false;
+    }
+    return filePath;
+}
+
 // Utility function to read the .hack4impactrc file
-export default function readConfig(): { projectPath?: string } | undefined {
-    const configPath = path.join(process.cwd(), '.hack4impactrc');
-    if (fs.existsSync(configPath)) {
+export function readConfig(): { projectPath?: string } | undefined {
+    const configPath = hack4ImpactRcExists();
+    if (configPath) {
         const configFile = fs.readFileSync(configPath, 'utf-8');
         try {
             const config = JSON.parse(configFile);

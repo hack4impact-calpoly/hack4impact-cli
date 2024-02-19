@@ -3,11 +3,25 @@
 import { program } from 'commander';
 import { initProject } from './commands/init/init';
 import { addDatabase } from './commands/add-db/add-db';
+import { hack4ImpactRcExists } from 'utils/read-config-file';
+import checkIfAnyDirectoryExists from 'utils/check-directory';
 
 program.name('hack4impact-cli').description('CLI to initialize and set up volunteer management systems');
 
-program.command('init').description('Initialize a new volunteer management project').action(initProject);
-
-program.command('add-db').description('Add a database to the project').action(addDatabase);
+// Only show init command if .hack4impactrc does not exist
+if (!hack4ImpactRcExists()) {
+    program.command('init').description('Initialize a new volunteer management project').action(initProject);
+    // Case for if they created a project but haven't cd into it yet
+    // If a directory exists, add help text to the end of message to remind them to cd into the project directory
+    if (checkIfAnyDirectoryExists()) {
+        program.addHelpText(
+            'after',
+            `\n* If you've already initialized a project, make sure to cd into the project directory before running any other commands.\n`
+        );
+    }
+} else {
+    // Only show rest of commands if .hack4impactrc exists
+    program.command('add-db').description('Add a database to the project').action(addDatabase);
+}
 
 program.parse(process.argv);

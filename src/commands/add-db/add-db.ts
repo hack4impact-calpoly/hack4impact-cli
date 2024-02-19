@@ -1,7 +1,7 @@
 // Assuming other imports are already here
 import inquirer from 'inquirer';
 import execAsync from 'utils/exec-async';
-import readConfig from 'utils/read-config-file';
+import { readConfig } from 'utils/read-config-file';
 
 /**
  * Adds a database to the project by prompting the user to select a database option.
