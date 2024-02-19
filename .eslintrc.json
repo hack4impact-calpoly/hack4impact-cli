@@ -14,8 +14,7 @@
         "indent": ["error", 4, { "SwitchCase": 1 }],
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "single", { "allowTemplateLiterals": true, "avoidEscape": true }],
-        "semi": ["error", "always"],
-        "@typescript-eslint/consistent-type-definitions": ["error", "type"]
+        "semi": ["error", "always"]
     },
     "ignorePatterns": ["dist/", "node_modules/"]
 }

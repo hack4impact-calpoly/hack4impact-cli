@@ -2,6 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
 import { execSync } from 'child_process';
+import pluginConfig from './plugins.json';
+import { chdir } from 'process';
+import installPlugins from 'utils/install-plugins';
+import Plugins from './plugins/index';
+import { Plugin } from 'types/plugin';
 
 /**
  * Initializes a new project by prompting the user for a project name and a GitHub template.
@@ -39,8 +44,9 @@ export async function initProject() {
                 }
 
                 createNextApp(projectPath);
+                chdir(projectPath);
 
-                // await selectGitHubTemplate.action(answers, projectName, projectPath);
+                installPlugins(Plugins as unknown as Plugin, pluginConfig);
 
                 fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2), 'utf-8');
                 console.log(`Config file .hack4impactrc created in ${configPath}\n`);
