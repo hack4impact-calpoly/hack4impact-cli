@@ -2,7 +2,7 @@ import { Plugin } from 'types/plugin';
 import fs from 'fs';
 import path from 'path';
 import { NPM } from './shared';
-import config from './config.json';
+// import config from './config.json';
 
 const VERBOSE = false;
 
@@ -40,9 +40,9 @@ function addToPackageJson() {
                 },
             };
             const scripts = ['npm run lint'];
-            config.plugins.prettier && scripts.push('npm run prettier');
+            // config.plugins.prettier && scripts.push('npm run prettier');
             packageJson['lint-staged'] = {
-                'src/*': scripts,
+                'src/**': scripts,
             };
 
             // Write the modified package.json back to the file

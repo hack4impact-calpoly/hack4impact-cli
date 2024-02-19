@@ -17,7 +17,7 @@
         "build": "tsup",
         "test": "echo \"Error: no test specified\" && exit 1",
         "prettier": "prettier --write",
-        "lint": "eslint --ignore-path .eslintignore --ext .js,.ts",
+        "lint": "eslint --ignore-path .eslintignore --ext .js,.ts,.tsx",
         "prepare": "husky"
     },
     "engines": {
@@ -58,7 +58,7 @@
         }
     },
     "lint-staged": {
-        "src/*": [
+        "src/**": [
             "npm run prettier",
             "npm run lint"
         ]

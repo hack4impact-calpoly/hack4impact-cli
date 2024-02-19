@@ -9,7 +9,7 @@ const VERBOSE = false;
 const prettier: Plugin = {
     install: () => {
         VERBOSE && console.log('Installing Prettier...');
-        execSync('npm install --save-dev prettier', { stdio: 'inherit' });
+        execSync('npm install --save-dev prettier eslint-plugin-prettier', { stdio: 'inherit' });
 
         VERBOSE && console.log('Configuring Prettier...');
         updateEslintConfig(process.cwd());
@@ -17,6 +17,7 @@ const prettier: Plugin = {
         updatePackageJson((packageJson: PackageJson) => {
             packageJson.scripts = packageJson.scripts || {};
             packageJson.scripts.prettier = 'prettier --write .';
+            packageJson.scripts.lint = 'next lint --fix';
             return packageJson;
         });
 

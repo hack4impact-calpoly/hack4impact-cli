@@ -1,7 +1,8 @@
 {
     "name": "init",
     "plugins": {
+        "eslint": true,
         "prettier": true,
-        "husky": true
+        "husky": false
     }
 }
