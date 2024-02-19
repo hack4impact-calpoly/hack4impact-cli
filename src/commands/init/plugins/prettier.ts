@@ -3,16 +3,18 @@ import { Plugin } from 'types/plugin';
 import fs from 'fs';
 import path from 'path';
 
+const VERBOSE = false;
+
 const prettier: Plugin = {
     install: () => {
-        console.log('Installing Prettier...');
+        VERBOSE && console.log('Installing Prettier...');
         execSync('npm install --save-dev prettier', { stdio: 'inherit' });
 
-        console.log('Configuring Prettier...');
+        VERBOSE && console.log('Configuring Prettier...');
         updateEslintConfig(process.cwd());
         createPrettierConfig(process.cwd());
 
-        console.log('Prettier installed and configured.');
+        VERBOSE && console.log('Prettier installed and configured.');
     },
 };
 
@@ -34,7 +36,7 @@ function updateEslintConfig(projectPath: string) {
     // Write the updated configuration back to the file
     fs.writeFileSync(eslintConfigPath, JSON.stringify(eslintConfig, null, 2), 'utf8');
 
-    console.log('ESLint configuration updated to include Prettier.');
+    VERBOSE && console.log('ESLint configuration updated to include Prettier.');
 }
 
 function createPrettierConfig(projectPath: string) {
@@ -54,7 +56,7 @@ function createPrettierConfig(projectPath: string) {
     const configPath = path.join(projectPath, '.prettierrc');
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
 
-    console.log('Prettier configuration created.');
+    VERBOSE && console.log('Prettier configuration created.');
 }
 
 export default prettier;
