@@ -1,5 +1,5 @@
 {
-    "name": "hack4impact",
+    "name": "hack4impact-cli",
     "version": "1.0.0",
     "description": "",
     "type": "module",
@@ -10,7 +10,7 @@
         "dist"
     ],
     "bin": {
-        "hack4impact": "./dist/index.js"
+        "hack4impact-cli": "./dist/index.js"
     },
     "scripts": {
         "start": "node ./dist/index.js",
