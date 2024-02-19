@@ -13,6 +13,7 @@ const prettier: Plugin = {
         VERBOSE && console.log('Configuring Prettier...');
         updateEslintConfig(process.cwd());
         createPrettierConfig(process.cwd());
+        createPrettierIgnore(process.cwd());
         packageJsonAdditions.scripts = packageJsonAdditions.scripts || {};
         packageJsonAdditions.scripts.prettier = 'prettier --write .';
 
@@ -59,6 +60,15 @@ function createPrettierConfig(projectPath: string) {
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
 
     VERBOSE && console.log('Prettier configuration created.');
+}
+
+function createPrettierIgnore(projectPath: string) {
+    fs.writeFileSync(
+        path.join(projectPath, '.prettierignore'),
+        `
+`,
+        { encoding: 'utf8' }
+    );
 }
 
 export default prettier;
