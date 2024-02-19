@@ -8,6 +8,7 @@ import installPlugins from 'utils/install-plugins';
 import Plugins from './plugins/index';
 import { Plugin } from 'types/plugin';
 import colors from 'picocolors';
+import setupGitRepo from 'utils/setup-git-repo';
 
 /**
  * Initializes a new project by prompting the user for a project name and a GitHub template.
@@ -46,7 +47,10 @@ export async function initProject() {
                 }
 
                 createNextApp(projectPath);
+
                 chdir(projectPath);
+
+                setupGitRepo(projectPath);
 
                 installPlugins(Plugins as unknown as Plugin, pluginConfig);
 

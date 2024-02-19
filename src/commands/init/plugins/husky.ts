@@ -14,6 +14,8 @@ const husky: Plugin = {
     install: (packageJsonAdditions) => {
         NPM.installDev('husky lint-staged');
         createHuskyPreCommitHook();
+        execSync('git init');
+        execSync('npx husky');
         updatePackageJson(packageJsonAdditions);
     },
 };
@@ -22,8 +24,6 @@ const husky: Plugin = {
 function updatePackageJson(packageJsonAdditions: any) {
     packageJsonAdditions.scripts = packageJsonAdditions.scripts || {};
     // Add or modify the husky and lint-staged configurations
-    packageJsonAdditions.scripts.prepare = 'husky install';
-
     packageJsonAdditions.husky = {
         hooks: {
             'pre-commit': 'lint-staged',
@@ -48,17 +48,14 @@ function createHuskyPreCommitHook() {
         fs.mkdirSync(huskyDirPath);
     }
 
-    // Write the pre-commit hook script
+    // Write the pre-commit hook script, set to executable
     fs.writeFileSync(
         preCommitFilePath,
         `#!/bin/sh
   npx lint-staged
   `,
-        { encoding: 'utf8' }
+        { mode: 0o755, encoding: 'utf8' }
     );
-
-    // Set the pre-commit hook as executable
-    execSync(`chmod +x "${preCommitFilePath}"`);
 }
 
 export default husky;

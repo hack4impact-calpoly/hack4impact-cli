@@ -8,7 +8,7 @@ import { Plugin } from 'types/plugin';
 const eslint: Plugin = {
     install: (packageJsonAdditions) => {
         packageJsonAdditions.scripts = packageJsonAdditions.scripts || {};
-        packageJsonAdditions.scripts.lint = 'next lint --fix';
+        packageJsonAdditions.scripts.lint = 'next lint src --fix';
     },
 };
 export default eslint;
