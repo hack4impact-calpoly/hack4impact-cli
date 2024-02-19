@@ -2,18 +2,14 @@ import { execSync } from 'child_process';
 import { Plugin } from 'types/plugin';
 import fs from 'fs';
 import path from 'path';
-import { updatePackageJson, PackageJson } from './shared';
 
 const PACKAGE: Plugin = {
-    install: () => {
+    install: (packageJsonAdditions) => {
         // Replace necessary parts of this function with your own plugin's installation steps
         execSync('npm install <<PACKAGE>>', { stdio: 'inherit' });
         createPrettierConfig(process.cwd());
-        updatePackageJson((packageJson: PackageJson) => {
-            packageJson.scripts = packageJson.scripts || {};
-            packageJson.scripts.prettier = 'prettier --write .';
-            return packageJson;
-        });
+        packageJsonAdditions.scripts = packageJsonAdditions.scripts || {};
+        packageJsonAdditions.scripts.prettier = 'prettier --write .';
     },
 };
 

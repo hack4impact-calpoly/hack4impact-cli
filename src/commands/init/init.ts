@@ -7,12 +7,14 @@ import { chdir } from 'process';
 import installPlugins from 'utils/install-plugins';
 import Plugins from './plugins/index';
 import { Plugin } from 'types/plugin';
+import colors from 'picocolors';
 
 /**
  * Initializes a new project by prompting the user for a project name and a GitHub template.
  */
 
 export async function initProject() {
+    const { green, cyan } = colors;
     inquirer
         .prompt([
             {
@@ -50,7 +52,7 @@ export async function initProject() {
 
                 fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2), 'utf-8');
                 console.log(`Config file .hack4impactrc created in ${configPath}\n`);
-                console.log(`Project ${projectName} initialized successfully.`);
+                console.log(`${green('Success!')} Project ${cyan(projectName)} initialized.`);
             } catch (error) {
                 console.error('Failed to initialize project:', error);
             }

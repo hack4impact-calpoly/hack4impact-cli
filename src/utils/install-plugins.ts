@@ -15,7 +15,6 @@ export default function installPlugins(Plugins: Plugin, pluginConfig: { plugins:
                 console.log(`- ${cyan(pluginName)}`);
                 // TypeScript doesn't like dynamic imports
                 /* eslint-disable @typescript-eslint/no-explicit-any */
-                // packageJsonAdditions = (Plugins[pluginName] as any).install(packageJsonAdditions);
                 (Plugins[pluginName] as any).install(packageJsonAdditions);
             } catch (error) {
                 console.error(`Failed to initialize plugin ${pluginName}:`, error);
@@ -55,6 +54,6 @@ function applyPackageJsonAdditions(updates: any) {
     } catch (e) {
         console.error('Failed to write package.json:', e);
     }
-    const cyan = colors.cyan;
-    console.log(cyan('\npackage.json has been updated.\n'));
+    const { green, cyan } = colors;
+    console.log(`${green('✔')} ${cyan('\npackage.json has been updated.\n')}`);
 }
