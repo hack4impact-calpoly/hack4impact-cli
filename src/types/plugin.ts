@@ -1,8 +1,11 @@
-interface BasePlugin {
-    install: () => void;
+interface StringIndexable {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    [key: string]: (packageJsonAdditions: any) => void;
 }
 
-// Use a type for plugins that may have dynamic methods
-export type Plugin = BasePlugin & {
-    [key: string]: () => void;
-};
+interface BasePlugin {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    install: (packageJsonAdditions: any) => void;
+}
+
+export type Plugin = BasePlugin & StringIndexable;

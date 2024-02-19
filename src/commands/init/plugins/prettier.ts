@@ -1,18 +1,23 @@
-import { execSync } from 'child_process';
 import { Plugin } from 'types/plugin';
 import fs from 'fs';
 import path from 'path';
+import { NPM } from './shared';
+
+const VERBOSE = false;
 
 const prettier: Plugin = {
-    install: () => {
-        console.log('Installing Prettier...');
-        execSync('npm install --save-dev prettier', { stdio: 'inherit' });
+    install: (packageJsonAdditions) => {
+        VERBOSE && console.log('Installing Prettier...');
+        NPM.installDev('prettier eslint-plugin-prettier');
 
-        console.log('Configuring Prettier...');
+        VERBOSE && console.log('Configuring Prettier...');
         updateEslintConfig(process.cwd());
         createPrettierConfig(process.cwd());
+        createPrettierIgnore(process.cwd());
+        packageJsonAdditions.scripts = packageJsonAdditions.scripts || {};
+        packageJsonAdditions.scripts.prettier = 'prettier --write .';
 
-        console.log('Prettier installed and configured.');
+        VERBOSE && console.log('Prettier installed and configured.');
     },
 };
 
@@ -34,7 +39,7 @@ function updateEslintConfig(projectPath: string) {
     // Write the updated configuration back to the file
     fs.writeFileSync(eslintConfigPath, JSON.stringify(eslintConfig, null, 2), 'utf8');
 
-    console.log('ESLint configuration updated to include Prettier.');
+    VERBOSE && console.log('ESLint configuration updated to include Prettier.');
 }
 
 function createPrettierConfig(projectPath: string) {
@@ -54,7 +59,16 @@ function createPrettierConfig(projectPath: string) {
     const configPath = path.join(projectPath, '.prettierrc');
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
 
-    console.log('Prettier configuration created.');
+    VERBOSE && console.log('Prettier configuration created.');
+}
+
+function createPrettierIgnore(projectPath: string) {
+    fs.writeFileSync(
+        path.join(projectPath, '.prettierignore'),
+        `
+`,
+        { encoding: 'utf8' }
+    );
 }
 
 export default prettier;
