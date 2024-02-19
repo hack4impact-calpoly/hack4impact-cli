@@ -1,17 +1,18 @@
 import { Plugin } from 'types/plugin';
 import { NPM } from './shared';
-import colors from 'picocolors';
 import path from 'path';
 import fs from 'fs';
 
 const jest: Plugin = {
     install: () => {
-        const { cyan } = colors;
         // Replace necessary parts of this function with your own plugin's installation steps
         NPM.installDev('jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom');
-        console.log(cyan('Creating Jest config file. Please follow steps below:'));
         // Instead of running the jest cli for creating config file like below, we copy over from template given by NextJS: `jestConfigTemplate`
-        /* execSync('npm init jest@latest', { stdio: 'inherit' }); */
+        /* 
+        const { cyan } = colors;
+        console.log(cyan('Creating Jest config file. Please follow steps below:'));
+        execSync('npm init jest@latest', { stdio: 'inherit' });
+        */
         const targetPath = path.join(process.cwd(), 'jest.config.ts');
         fs.writeFileSync(targetPath, jestConfigTemplate);
     },
