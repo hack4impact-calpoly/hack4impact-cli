@@ -1,6 +1,7 @@
 {
     "name": "init",
     "plugins": {
-        "prettier": true
+        "prettier": true,
+        "husky": true
     }
 }

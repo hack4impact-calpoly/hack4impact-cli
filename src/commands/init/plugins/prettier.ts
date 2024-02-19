@@ -2,6 +2,7 @@ import { execSync } from 'child_process';
 import { Plugin } from 'types/plugin';
 import fs from 'fs';
 import path from 'path';
+import { updatePackageJson, PackageJson } from './shared';
 
 const VERBOSE = false;
 
@@ -13,6 +14,11 @@ const prettier: Plugin = {
         VERBOSE && console.log('Configuring Prettier...');
         updateEslintConfig(process.cwd());
         createPrettierConfig(process.cwd());
+        updatePackageJson((packageJson: PackageJson) => {
+            packageJson.scripts = packageJson.scripts || {};
+            packageJson.scripts.prettier = 'prettier --write .';
+            return packageJson;
+        });
 
         VERBOSE && console.log('Prettier installed and configured.');
     },
