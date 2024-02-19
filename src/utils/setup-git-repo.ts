@@ -17,6 +17,7 @@ export default function setupGitRepo(directory: string) {
     }
 }
 
+// TODO: Instruct the user to remember to link this current git repo to the org
 // function instructGitHubRepoCreation(organizationName: string, projectName: string) {
 //     console.log(`Please create a new repository in your GitHub organization.`);
 //     console.log(`Visit https://github.com/organizations/${organizationName}/repositories/new`);
