@@ -55,5 +55,5 @@ function applyPackageJsonAdditions(updates: any) {
         console.error('Failed to write package.json:', e);
     }
     const { green, cyan } = colors;
-    console.log(`${green('✔')} ${cyan('\npackage.json has been updated.\n')}`);
+    console.log(`\n${green('✔')} ${cyan('package.json has been updated.')}`);
 }

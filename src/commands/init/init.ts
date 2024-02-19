@@ -51,7 +51,7 @@ export async function initProject() {
                 installPlugins(Plugins as unknown as Plugin, pluginConfig);
 
                 fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2), 'utf-8');
-                console.log(`Config file .hack4impactrc created in ${configPath}\n`);
+                console.log(`${green('✔')} ${cyan(`Config file .hack4impactrc created in ${configPath}`)}\n`);
                 console.log(`${green('Success!')} Project ${cyan(projectName)} initialized.`);
             } catch (error) {
                 console.error('Failed to initialize project:', error);
