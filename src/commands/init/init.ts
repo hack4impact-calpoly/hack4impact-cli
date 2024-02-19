@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
 import { execSync } from 'child_process';
-import pluginConfig from './plugins.json';
+import pluginConfig from './plugins/config.json';
 import { chdir } from 'process';
 import installPlugins from 'utils/install-plugins';
 import Plugins from './plugins/index';
