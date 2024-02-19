@@ -3,6 +3,7 @@
     "plugins": {
         "eslint": true,
         "prettier": true,
-        "husky": true
+        "husky": true,
+        "jest": true
     }
 }

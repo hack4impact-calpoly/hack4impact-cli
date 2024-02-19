@@ -1,14 +1,14 @@
-import { execSync } from 'child_process';
 import { Plugin } from 'types/plugin';
 import fs from 'fs';
 import path from 'path';
+import { NPM } from './shared';
 
 const VERBOSE = false;
 
 const prettier: Plugin = {
     install: (packageJsonAdditions) => {
         VERBOSE && console.log('Installing Prettier...');
-        execSync('npm install --save-dev prettier eslint-plugin-prettier', { stdio: 'inherit' });
+        NPM.installDev('prettier eslint-plugin-prettier');
 
         VERBOSE && console.log('Configuring Prettier...');
         updateEslintConfig(process.cwd());
