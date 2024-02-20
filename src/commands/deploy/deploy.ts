@@ -65,16 +65,19 @@ async function askOpenPage(name: string, url: string) {
 }
 
 async function validateGitHubStatus() {
+    const { red, yellow } = colors;
     if (!isGitRepository()) {
-        console.error('This directory is not a Git repository.');
+        console.error(red('Error: This directory is not a Git repository. Did you mean to run: hack4impact-cli init'));
         process.exit(1);
     }
     if (!hasRemote()) {
-        console.error('This Git repository does not have a remote.');
+        console.error(red('Error: This Git repository does not have a remote.'));
+        console.error(
+            'Please create a new repository in your GitHub organization.\nFirst create a repository in your GitHub organization, then\ngit remote add origin https://github.com/YourOrganizationName/YourRepositoryName.git'
+        );
         process.exit(1);
     }
     if (hasUnpushedChanges(true)) {
-        const { yellow } = colors;
         const answers = await inquirer.prompt([
             {
                 type: 'confirm',
