@@ -3,13 +3,13 @@ import path from 'path';
 import { execSync } from 'child_process';
 import colors from 'picocolors';
 
-function isGitRepository(directory: string) {
+function isGitRepositorySimpleCheck(directory: string) {
     return fs.existsSync(path.join(directory, '.git'));
 }
 
 export default function setupGitRepo(directory: string) {
     const { green, cyan } = colors;
-    if (!isGitRepository(directory)) {
+    if (!isGitRepositorySimpleCheck(directory)) {
         execSync('git init', { cwd: directory, stdio: 'inherit' });
         console.log(`${green('✔')} ${cyan('Initialized a new Git repository.\n')}`);
     } else {

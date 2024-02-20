@@ -3,6 +3,7 @@
 import { program } from 'commander';
 import { initProject } from './commands/init/init';
 import { addDatabase } from './commands/add-db/add-db';
+import { deploy } from './commands/deploy/deploy';
 import { hack4ImpactRcExists } from 'utils/read-config-file';
 import checkIfAnyDirectoryExists from 'utils/check-directory';
 
@@ -21,6 +22,7 @@ if (!hack4ImpactRcExists()) {
     }
 } else {
     // Only show rest of commands if .hack4impactrc exists
+    program.command('deploy').description('Deploy the project').action(deploy);
     program.command('add-db').description('Add a database to the project').action(addDatabase);
 }
 
