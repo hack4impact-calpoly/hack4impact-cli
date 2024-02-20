@@ -1,6 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
+/**
+ * Checks if any directory exists in the current working directory.
+ * @returns {boolean} True if any directory exists, false otherwise.
+ */
 export default function checkIfAnyDirectoryExists() {
     const cwd = process.cwd();
     const filesAndDirectories = fs.readdirSync(cwd);

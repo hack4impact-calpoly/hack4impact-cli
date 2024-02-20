@@ -6,9 +6,11 @@ import { addDatabase } from './commands/add-db/add-db';
 import { deploy } from './commands/deploy/deploy';
 import { hack4ImpactRcExists } from 'utils/read-config-file';
 import checkIfAnyDirectoryExists from 'utils/check-directory';
+import colors from 'picocolors';
 
 program.name('hack4impact-cli').description('CLI to initialize and set up volunteer management systems');
 
+const { green } = colors;
 // Only show init command if .hack4impactrc does not exist
 if (!hack4ImpactRcExists()) {
     program.command('init').description('Initialize a new volunteer management project').action(initProject);
@@ -17,7 +19,7 @@ if (!hack4ImpactRcExists()) {
     if (checkIfAnyDirectoryExists()) {
         program.addHelpText(
             'after',
-            `\n* If you've already initialized a project, make sure to cd into the project directory before running any other commands.\n`
+            `\n${green(`* If you've already initialized a project, make sure to cd into the project directory before running any other commands.`)}\n`
         );
     }
 } else {
