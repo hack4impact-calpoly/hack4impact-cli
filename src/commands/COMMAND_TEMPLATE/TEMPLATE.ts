@@ -7,6 +7,7 @@ import { NPM } from 'utils/package-manager';
  * Adds a database to the project by prompting the user to select a database option.
  */
 export async function addDatabase() {
+    // Checks if a .hack4impactrc file exists in the current directory to see if the project has been initialized yet
     const config = readConfig();
 
     if (!config || !config.projectPath) {
@@ -15,7 +16,7 @@ export async function addDatabase() {
 
     const dbOptions = [
         { name: 'MongoDB', value: 'mongodb' },
-        { name: 'Other / I will set up the database myself', value: 'other' },
+        { name: 'Other - I will set up the database myself', value: 'other' },
         /* TODO
         // { name: 'MySQL', value: 'mysql' },
         // { name: 'PostgreSQL', value: 'postgresql' },

@@ -7,6 +7,8 @@ const PACKAGE: Plugin = {
     install: (packageJsonAdditions) => {
         // Replace necessary parts of this function with your own plugin's installation steps
         NPM.installDev('<<PACKAGE>>'); // .install('<<PACKAGE>>')
+
+        // Any additional setup, such as creating a config file, or modifying the package.json file
         createPrettierConfig(process.cwd());
         packageJsonAdditions.scripts = packageJsonAdditions.scripts || {};
         packageJsonAdditions.scripts.prettier = 'prettier --write .';
