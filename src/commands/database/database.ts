@@ -39,9 +39,8 @@ export async function addDatabase() {
             console.error('Invalid database selection.');
             return;
         }
-
+        // console.log(`Setting up ${selectedOption.name} for your project...`);
         await setupDatabase(selectedOption.value);
-        console.log(`Setting up ${selectedOption.name} for your project...`);
     } catch (error) {
         console.error('Failed to add database:', error);
     }
@@ -51,7 +50,7 @@ async function setupDatabase(database: string) {
     const pluginsToInstall = [];
     switch (database) {
         case 'mongodb':
-            // pluginsToInstall.push('mongoose');
+            pluginsToInstall.push('mongoose');
             plugins.mongoose.install({});
             break;
         case 'other':
