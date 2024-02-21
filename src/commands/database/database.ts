@@ -1,7 +1,9 @@
 // Assuming other imports are already here
 import inquirer from 'inquirer';
 import { readConfig } from 'utils/read-config-file';
-import { NPM } from 'utils/package-manager';
+// import { NPM } from 'utils/package-manager';
+
+import plugins from './plugins';
 
 /**
  * Adds a database to the project by prompting the user to select a database option.
@@ -15,7 +17,7 @@ export async function addDatabase() {
 
     const dbOptions = [
         { name: 'MongoDB', value: 'mongodb' },
-        { name: 'Other / I will set up the database myself', value: 'other' },
+        { name: 'Other - I will set up the database myself', value: 'other' },
         /* TODO
         // { name: 'MySQL', value: 'mysql' },
         // { name: 'PostgreSQL', value: 'postgresql' },
@@ -38,18 +40,19 @@ export async function addDatabase() {
             return;
         }
 
-        await setupDatabase(selectedOption.value, config.projectPath);
+        await setupDatabase(selectedOption.value);
         console.log(`Setting up ${selectedOption.name} for your project...`);
     } catch (error) {
         console.error('Failed to add database:', error);
     }
 }
 
-async function setupDatabase(database: string, projectPath: string) {
-    let packageToInstall = '';
+async function setupDatabase(database: string) {
+    const pluginsToInstall = [];
     switch (database) {
         case 'mongodb':
-            packageToInstall = 'mongoose';
+            // pluginsToInstall.push('mongoose');
+            plugins.mongoose.install({});
             break;
         case 'other':
             break;
@@ -62,14 +65,14 @@ async function setupDatabase(database: string, projectPath: string) {
         //     break;
         */
     }
-    if (packageToInstall) {
-        try {
-            console.log(`Installing ${packageToInstall} in ${projectPath}...`);
-            NPM.install(packageToInstall);
-            console.log(`${packageToInstall} installed successfully.`);
-        } catch (error) {
-            console.error(`Error installing ${packageToInstall}:`, error);
-        }
+    if (pluginsToInstall.length > 0) {
+        // try {
+        //     console.log(`Installing ${packageToInstall} in ${projectPath}...`);
+        //     // NPM.install(packageToInstall);
+        //     console.log(`${packageToInstall} installed successfully.`);
+        // } catch (error) {
+        //     console.error(`Error installing ${packageToInstall}:`, error);
+        // }
     } else {
         console.log('No database package specified for installation.');
     }
