@@ -1,7 +1,7 @@
 // Assuming other imports are already here
 import inquirer from 'inquirer';
-import execAsync from 'utils/exec-async';
 import { readConfig } from 'utils/read-config-file';
+import { NPM } from 'utils/package-manager';
 
 /**
  * Adds a database to the project by prompting the user to select a database option.
@@ -15,6 +15,7 @@ export async function addDatabase() {
 
     const dbOptions = [
         { name: 'MongoDB', value: 'mongodb' },
+        { name: 'Other / I will set up the database myself', value: 'other' },
         /* TODO
         // { name: 'MySQL', value: 'mysql' },
         // { name: 'PostgreSQL', value: 'postgresql' },
@@ -64,9 +65,7 @@ async function setupDatabase(database: string, projectPath: string) {
     if (packageToInstall) {
         try {
             console.log(`Installing ${packageToInstall} in ${projectPath}...`);
-            const { stdout, stderr } = await execAsync(`npm install ${packageToInstall}`, { cwd: projectPath });
-            console.log(stdout);
-            if (stderr) console.error(stderr);
+            NPM.install(packageToInstall);
             console.log(`${packageToInstall} installed successfully.`);
         } catch (error) {
             console.error(`Error installing ${packageToInstall}:`, error);

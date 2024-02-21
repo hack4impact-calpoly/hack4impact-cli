@@ -1,7 +1,7 @@
 import { Plugin } from 'types/plugin';
 import fs from 'fs';
 import path from 'path';
-import { NPM } from './shared';
+import { NPM } from 'utils/package-manager';
 
 const VERBOSE = false;
 

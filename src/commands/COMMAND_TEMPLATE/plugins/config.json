@@ -1,0 +1,6 @@
+{
+    "name": "name-of-command",
+    "plugins": {
+        "prettier": true
+    }
+}

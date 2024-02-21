@@ -11,7 +11,7 @@ hack4impact-cli init
 <br>
 
 ```
-hack4impact-cli add-db
+hack4impact-cli database
 ```
 
 -   Installs mongoose in project directory
