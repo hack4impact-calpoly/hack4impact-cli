@@ -1,0 +1,6 @@
+{
+    "name": "database",
+    "plugins": {
+        "mongodb": true
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "name": "init",
+    "plugins": {
+        "prettier": true
+    }
+}
