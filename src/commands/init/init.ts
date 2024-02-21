@@ -52,6 +52,10 @@ export async function initProject() {
 
                 setupGitRepo(projectPath);
 
+                // Create an .env.local file
+                const envLocalPath = path.join(projectPath, '.env.local');
+                fs.writeFileSync(envLocalPath, '', 'utf-8');
+
                 installPlugins(Plugins as unknown as Plugin, pluginConfig);
 
                 fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2), 'utf-8');
