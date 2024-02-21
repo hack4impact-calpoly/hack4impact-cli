@@ -50,6 +50,8 @@ async function setupDatabase(database: string, projectPath: string) {
         case 'mongodb':
             packageToInstall = 'mongoose';
             break;
+        case 'other':
+            break;
         /* TODO
         // case 'mysql':
         //     packageToInstall = 'mysql2'; // or 'sequelize' for an ORM approach
