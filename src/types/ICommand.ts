@@ -1,7 +1,8 @@
-import { Plugin } from './plugin';
+import { PluginRegistry, PluginConfigFile } from './plugin';
 
 export interface ICommand {
     requiresProjectInitialized: boolean;
-    plugins: Plugin[];
+    plugins: PluginRegistry;
+    pluginConfigFile: PluginConfigFile;
     execute(): Promise<void>;
 }
