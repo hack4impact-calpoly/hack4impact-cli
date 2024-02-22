@@ -5,11 +5,11 @@ import { validateGitHubStatus } from 'utils/check-git';
 import open from 'open';
 import colors from 'picocolors';
 import writeToEnv from 'utils/write-to-env';
+import { log, LogColor } from 'utils/logger';
 
 // MongoDB with Mongoose ORM
 const mongoose: Plugin = {
     install: async () => {
-        const { cyan } = colors;
         try {
             await validateGitHubStatus();
             NPM.install('mongoose');
@@ -17,10 +17,11 @@ const mongoose: Plugin = {
             // Prompt user to go to mongoDB website to set up project
             await askOpenPage('MongoDB', 'https://www.mongodb.com/cloud/atlas/register');
             // Prompt user for & add to url .env
-            console.log(
-                cyan(
-                    '\nLog in to your MongoDB Atlas account and copy the connection string, which can be found under:\n“Connect” > “Connecting with MongoDB for VS Code.”'
-                )
+            log(
+                'Log in to your MongoDB Atlas account and copy the connection string, which can be found under:\n“Connect” > “Connecting with MongoDB for VS Code.”',
+                undefined,
+                LogColor.cyan,
+                true
             );
             const resUrl = await inquirer.prompt([
                 {
@@ -38,10 +39,11 @@ const mongoose: Plugin = {
             let url = resUrl.url;
             // If "<password>" is in the URL, replace it with the actual password by prompting the user
             if (url.includes('<password>')) {
-                console.log(
-                    cyan(
-                        '\nPlease enter the password for your MongoDB database user. You can find this on the left navigation bar:\n“Security” > “Database Access.”'
-                    )
+                log(
+                    'Please enter the password for your MongoDB database user. You can find this on the left navigation bar:\n“Security” > “Database Access.”',
+                    undefined,
+                    LogColor.cyan,
+                    true
                 );
                 const resPw = await inquirer.prompt([
                     {

@@ -1,6 +1,7 @@
 import { execSync } from 'child_process';
 import inquirer from 'inquirer';
 import colors from 'picocolors';
+import { log, LogLevel } from 'utils/logger';
 
 /**
  * Validates the current Git repository status to ensure that the project can be deployed.
@@ -9,16 +10,16 @@ import colors from 'picocolors';
  * - Checks if there are unpushed changes
  */
 async function validateGitHubStatus() {
-    const { red, yellow, bgBlack, bold } = colors;
+    const { yellow } = colors;
     if (!isGitRepository()) {
-        console.error(red('Error: This directory is not a Git repository. Did you mean to run: hack4impact-cli init'));
+        log('This directory is not a Git repository. Did you mean to run: hack4impact-cli init', LogLevel.error);
         process.exit(1);
     }
     if (!hasRemote()) {
-        console.error(red('Error: This Git repository does not have a remote.'));
-        console.error(
-            `Please create a new repository in your GitHub organization, then\n${bold(bgBlack(' git remote add origin https://github.com/YourOrganizationName/YourRepositoryName.git '))}`
-        );
+        log('This Git repository does not have a remote.', LogLevel.error);
+        log('Please create a new repository in your GitHub organization, then');
+        log('git remote add origin https://github.com/YourOrganizationName/YourRepositoryName.git', LogLevel.command);
+
         process.exit(1);
     }
     if (hasUnpushedChanges(true)) {

@@ -10,6 +10,7 @@ import createCommand from '../createCommand';
 import { ICommand } from 'types/ICommand';
 import allPlugins from './plugins';
 import pluginConfigFile from './plugins/config.json';
+import { log, LogLevel, LogColor } from 'utils/logger';
 
 /**
  * Initializes a new project by prompting the user for a project name and a GitHub template.
@@ -20,7 +21,7 @@ const initProject: ICommand = createCommand({
     plugins: allPlugins,
     pluginConfigFile,
     action: async (context) => {
-        const { green, cyan } = colors;
+        const { cyan } = colors;
         inquirer
             .prompt([
                 {
@@ -64,8 +65,14 @@ const initProject: ICommand = createCommand({
                     installPlugins(context.plugins);
 
                     fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2), 'utf-8');
-                    console.log(`${green('✔')} ${cyan(`Config file .hack4impactrc created in ${configPath}`)}\n`);
-                    console.log(`${green('Success!')} Project ${cyan(projectName)} initialized.`);
+                    log(
+                        `Config file .hack4impactrc created in ${configPath}`,
+                        LogLevel.checkmark,
+                        LogColor.cyan,
+                        undefined,
+                        true
+                    );
+                    log(`Project ${cyan(projectName)} initialized.`, LogLevel.checkmark);
                 } catch (error) {
                     console.error('Failed to initialize project:', error);
                 }
