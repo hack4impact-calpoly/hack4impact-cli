@@ -1,52 +1,52 @@
-// Assuming other imports are already here
 import inquirer from 'inquirer';
-import { readConfig } from 'utils/read-config-file';
-// import { NPM } from 'utils/package-manager';
+import createCommand from '../createCommand';
+import pluginConfigFile from './plugins/config.json';
 
-import plugins from './plugins';
+import allPlugins from './plugins';
+import { PluginRegistry } from 'types/plugin';
+import { ICommand } from 'types/ICommand';
 
 /**
  * Adds a database to the project by prompting the user to select a database option.
  */
-export async function addDatabase() {
-    const config = readConfig();
+const addDatabase: ICommand = createCommand({
+    requiresProjectInitialized: true,
+    plugins: allPlugins,
+    pluginConfigFile,
+    action: async (context) => {
+        const dbOptions = [
+            { name: 'MongoDB', value: 'mongodb' },
+            { name: 'Other - I will set up the database myself', value: 'other' },
+            /* TODO
+            // { name: 'MySQL', value: 'mysql' },
+            // { name: 'PostgreSQL', value: 'postgresql' },
+            */
+        ];
 
-    if (!config || !config.projectPath) {
-        return;
-    }
+        try {
+            const answers = await inquirer.prompt([
+                {
+                    type: 'list',
+                    name: 'database',
+                    message: 'Choose a database for your project:',
+                    choices: dbOptions.map((db) => db.name),
+                },
+            ]);
 
-    const dbOptions = [
-        { name: 'MongoDB', value: 'mongodb' },
-        { name: 'Other - I will set up the database myself', value: 'other' },
-        /* TODO
-        // { name: 'MySQL', value: 'mysql' },
-        // { name: 'PostgreSQL', value: 'postgresql' },
-        */
-    ];
-
-    try {
-        const answers = await inquirer.prompt([
-            {
-                type: 'list',
-                name: 'database',
-                message: 'Choose a database for your project:',
-                choices: dbOptions.map((db) => db.name),
-            },
-        ]);
-
-        const selectedOption = dbOptions.find((db) => db.name === answers.database);
-        if (!selectedOption) {
-            console.error('Invalid database selection.');
-            return;
+            const selectedOption = dbOptions.find((db) => db.name === answers.database);
+            if (!selectedOption) {
+                console.error('Invalid database selection.');
+                return;
+            }
+            // console.log(`Setting up ${selectedOption.name} for your project...`);
+            await setupDatabase(selectedOption.value, context.plugins);
+        } catch (error) {
+            console.error('Failed to add database:', error);
         }
-        // console.log(`Setting up ${selectedOption.name} for your project...`);
-        await setupDatabase(selectedOption.value);
-    } catch (error) {
-        console.error('Failed to add database:', error);
-    }
-}
+    },
+});
 
-async function setupDatabase(database: string) {
+async function setupDatabase(database: string, plugins: PluginRegistry) {
     const pluginsToInstall = [];
     switch (database) {
         case 'mongodb':
@@ -76,3 +76,5 @@ async function setupDatabase(database: string) {
         console.log('No database package specified for installation.');
     }
 }
+
+export default addDatabase;

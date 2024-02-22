@@ -11,7 +11,7 @@ const mongoose: Plugin = {
     install: async () => {
         const { cyan } = colors;
         try {
-            validateGitHubStatus();
+            await validateGitHubStatus();
             NPM.install('mongoose');
 
             // Prompt user to go to mongoDB website to set up project

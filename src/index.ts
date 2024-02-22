@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import { initProject } from './commands/init/init';
-import { addDatabase } from './commands/database/database';
-import { deploy } from './commands/deploy/deploy';
+import initProject from './commands/init/init';
+import addDatabase from './commands/database/database';
+import deploy from './commands/deploy/deploy';
 import { hack4ImpactRcExists } from 'utils/read-config-file';
 import checkIfAnyDirectoryExists from 'utils/check-directory';
 import colors from 'picocolors';
@@ -13,7 +13,7 @@ program.name('hack4impact-cli').description('CLI to initialize and set up volunt
 const { green } = colors;
 // Only show init command if .hack4impactrc does not exist
 if (!hack4ImpactRcExists()) {
-    program.command('init').description('Initialize a new volunteer management project').action(initProject);
+    program.command('init').description('Initialize a new volunteer management project').action(initProject.execute);
     // Case for if they created a project but haven't cd into it yet
     // If a directory exists, add help text to the end of message to remind them to cd into the project directory
     if (checkIfAnyDirectoryExists()) {
@@ -24,8 +24,8 @@ if (!hack4ImpactRcExists()) {
     }
 } else {
     // Only show rest of commands if .hack4impactrc exists
-    program.command('deploy').description('Deploy the project').action(deploy);
-    program.command('database').description('Add a database to the project').action(addDatabase);
+    program.command('deploy').description('Deploy the project').action(deploy.execute);
+    program.command('database').description('Add a database to the project').action(addDatabase.execute);
 }
 
 program.parse(process.argv);

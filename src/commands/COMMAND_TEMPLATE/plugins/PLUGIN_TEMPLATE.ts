@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { NPM } from 'utils/package-manager';
 
-const PACKAGE: Plugin = {
+const PLUGIN_NAME: Plugin = {
     install: (packageJsonAdditions) => {
         // Replace necessary parts of this function with your own plugin's installation steps
         NPM.installDev('<<PACKAGE>>'); // .install('<<PACKAGE>>')
@@ -33,4 +33,4 @@ function createPrettierConfig(projectPath: string) {
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
 }
 
-export default PACKAGE;
+export default PLUGIN_NAME;

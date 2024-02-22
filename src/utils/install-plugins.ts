@@ -1,32 +1,28 @@
-import { Plugin } from 'types/plugin';
+import { PluginRegistry } from 'types/plugin';
+import { StringIndexableObject } from 'types/shared';
 import colors from 'picocolors';
 import fs from 'fs';
 import path from 'path';
 
-export default function installPlugins(Plugins: Plugin, pluginConfig: { plugins: { [key: string]: boolean } }) {
-    const { plugins } = pluginConfig;
+export default function installPlugins(plugins: PluginRegistry) {
     const cyan = colors.cyan;
     console.log('Installing additional plugins...');
     const packageJsonAdditions = {};
 
-    for (const [pluginName, isEnabled] of Object.entries(plugins)) {
-        if (isEnabled) {
-            try {
-                console.log(`- ${cyan(pluginName)}`);
-                // TypeScript doesn't like dynamic imports
-                /* eslint-disable @typescript-eslint/no-explicit-any */
-                (Plugins[pluginName] as any).install(packageJsonAdditions);
-            } catch (error) {
-                console.error(`Failed to initialize plugin ${pluginName}:`, error);
-            }
+    Object.keys(plugins).forEach((pluginName) => {
+        try {
+            console.log(`- ${cyan(pluginName)}`);
+            const plugin = plugins[pluginName];
+            plugin.install(packageJsonAdditions);
+        } catch (error) {
+            console.error(`Failed to initialize plugin ${pluginName}:`, error);
         }
-    }
-
+    });
     // Add new JSON to package.json all at once
     applyPackageJsonAdditions(packageJsonAdditions);
 }
 
-function applyPackageJsonAdditions(updates: any) {
+function applyPackageJsonAdditions(updates: StringIndexableObject) {
     const packageJsonPath = path.join(process.cwd(), 'package.json');
     let content = '';
     try {
