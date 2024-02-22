@@ -2,11 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
 import { execSync } from 'child_process';
-import pluginConfig from './plugins/config.json';
 import { chdir } from 'process';
 import installPlugins from 'utils/install-plugins';
-import Plugins from './plugins/index';
-import { Plugin } from 'types/plugin';
 import colors from 'picocolors';
 import setupGitRepo from 'utils/setup-git-repo';
 import createCommand from '../createCommand';
@@ -19,12 +16,10 @@ import pluginConfigFile from './plugins/config.json';
  */
 
 const initProject: ICommand = createCommand({
-    requiresProjectInitialized: true,
+    requiresProjectInitialized: false,
     plugins: allPlugins,
     pluginConfigFile,
     action: async (context) => {
-        context.plugins;
-
         const { green, cyan } = colors;
         inquirer
             .prompt([
@@ -66,7 +61,7 @@ const initProject: ICommand = createCommand({
                     const envLocalPath = path.join(projectPath, '.env.local');
                     fs.writeFileSync(envLocalPath, '', 'utf-8');
 
-                    installPlugins(Plugins as unknown as Plugin, pluginConfig);
+                    installPlugins(context.plugins);
 
                     fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2), 'utf-8');
                     console.log(`${green('✔')} ${cyan(`Config file .hack4impactrc created in ${configPath}`)}\n`);

@@ -1,7 +1,6 @@
 import { ICommand } from 'types/ICommand';
 import { PluginRegistry, PluginConfigFile } from 'types/plugin';
 import { readConfig } from 'utils/read-config-file';
-import colors from 'picocolors';
 
 export default function createCommand(config: {
     requiresProjectInitialized: boolean;
@@ -25,26 +24,19 @@ export default function createCommand(config: {
                     process.exit(1);
                 }
             }
+            let filteredPluginRegistry: PluginRegistry = {};
             // Always load in plugins if any
             if (pluginConfigFile) {
-                const { cyan } = colors;
-                // console.log('Loading plugins...');
-                // const { plugins } = pluginConfigFile;
-                for (const [pluginName, isEnabled] of Object.entries(plugins)) {
-                    if (isEnabled) {
-                        try {
-                            console.log(`- ${cyan(pluginName)}`);
-                            // TypeScript doesn't like dynamic imports
-                            /* eslint-disable @typescript-eslint/no-explicit-any */
-                            // (Plugins[pluginName] as any).install(packageJsonAdditions);
-                        } catch (error) {
-                            console.error(`Failed to initialize plugin ${pluginName}:`, error);
-                        }
+                filteredPluginRegistry = Object.entries(plugins).reduce((acc, [pluginName, plugin]) => {
+                    // If the plugin is not mentioned in configFile.plugins or is explicitly set to true, keep it
+                    if (pluginConfigFile.plugins[pluginName] !== false) {
+                        acc[pluginName] = plugin;
                     }
-                }
+                    return acc;
+                }, {} as PluginRegistry);
             }
             // Custom logic for the command
-            await action({ plugins });
+            await action({ plugins: filteredPluginRegistry });
         },
     };
 }

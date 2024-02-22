@@ -9,7 +9,7 @@ import colors from 'picocolors';
  * - Checks if there are unpushed changes
  */
 async function validateGitHubStatus() {
-    const { red, yellow } = colors;
+    const { red, yellow, bgBlack, bold } = colors;
     if (!isGitRepository()) {
         console.error(red('Error: This directory is not a Git repository. Did you mean to run: hack4impact-cli init'));
         process.exit(1);
@@ -17,7 +17,7 @@ async function validateGitHubStatus() {
     if (!hasRemote()) {
         console.error(red('Error: This Git repository does not have a remote.'));
         console.error(
-            'Please create a new repository in your GitHub organization.\nFirst create a repository in your GitHub organization, then\ngit remote add origin https://github.com/YourOrganizationName/YourRepositoryName.git'
+            `Please create a new repository in your GitHub organization, then\n${bold(bgBlack(' git remote add origin https://github.com/YourOrganizationName/YourRepositoryName.git '))}`
         );
         process.exit(1);
     }

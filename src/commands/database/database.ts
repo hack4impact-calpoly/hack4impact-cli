@@ -1,6 +1,4 @@
 import inquirer from 'inquirer';
-// import { readConfig } from 'utils/read-config-file';
-// import { NPM } from 'utils/package-manager';
 import createCommand from '../createCommand';
 import pluginConfigFile from './plugins/config.json';
 
