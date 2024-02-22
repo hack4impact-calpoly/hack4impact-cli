@@ -3,15 +3,16 @@ import { StringIndexableObject } from 'types/shared';
 import colors from 'picocolors';
 import fs from 'fs';
 import path from 'path';
+import { log, LogLevel, LogColor } from 'utils/logger';
 
 export default function installPlugins(plugins: PluginRegistry) {
     const cyan = colors.cyan;
-    console.log('Installing additional plugins...');
+    log('Installing additional plugins...');
     const packageJsonAdditions = {};
 
     Object.keys(plugins).forEach((pluginName) => {
         try {
-            console.log(`- ${cyan(pluginName)}`);
+            log(`- ${cyan(pluginName)}`);
             const plugin = plugins[pluginName];
             plugin.install(packageJsonAdditions);
         } catch (error) {
@@ -50,6 +51,5 @@ function applyPackageJsonAdditions(updates: StringIndexableObject) {
     } catch (e) {
         console.error('Failed to write package.json:', e);
     }
-    const { green, cyan } = colors;
-    console.log(`\n${green('✔')} ${cyan('package.json has been updated.')}`);
+    log(`'package.json has been updated.`, LogLevel.checkmark, LogColor.cyan, true);
 }

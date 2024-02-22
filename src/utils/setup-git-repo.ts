@@ -1,19 +1,18 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
-import colors from 'picocolors';
+import { log, LogLevel, LogColor } from 'utils/logger';
 
 function isGitRepositorySimpleCheck(directory: string) {
     return fs.existsSync(path.join(directory, '.git'));
 }
 
 export default function setupGitRepo(directory: string) {
-    const { green, cyan } = colors;
     if (!isGitRepositorySimpleCheck(directory)) {
         execSync('git init', { cwd: directory, stdio: 'inherit' });
-        console.log(`${green('✔')} ${cyan('Initialized a new Git repository.\n')}`);
+        log('Initialized a new Git repository.', LogLevel.checkmark, LogColor.cyan, undefined, true);
     } else {
-        console.log(`${green('✔')} ${cyan('Existing Git repository found.\n')}`);
+        log('Existing Git repository found.', LogLevel.checkmark, LogColor.cyan, undefined, true);
     }
 }
 
