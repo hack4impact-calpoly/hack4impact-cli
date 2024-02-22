@@ -1,4 +1,3 @@
-// Assuming other imports are already here
 import inquirer from 'inquirer';
 // import { readConfig } from 'utils/read-config-file';
 // import { NPM } from 'utils/package-manager';
@@ -7,11 +6,12 @@ import pluginConfigFile from './plugins/config.json';
 
 import allPlugins from './plugins';
 import { PluginRegistry } from 'types/plugin';
+import { ICommand } from 'types/ICommand';
 
 /**
  * Adds a database to the project by prompting the user to select a database option.
  */
-const addDatabase = createCommand({
+const addDatabase: ICommand = createCommand({
     requiresProjectInitialized: true,
     plugins: allPlugins,
     pluginConfigFile,

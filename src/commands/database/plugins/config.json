@@ -1,6 +1,4 @@
 {
     "name": "database",
-    "plugins": {
-        "test": true
-    }
+    "plugins": {}
 }
