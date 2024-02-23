@@ -19,11 +19,10 @@ const { cyan, green } = colors;
  * @param isFirstCall
  */
 export default async function templateCopyTransfer(source: string, target: string) {
-    // If target starts with /, remove it
-    if (target.startsWith('/')) {
-        target = target.slice(1);
-    }
-    process.stdout.write(`- Adding items to ${cyan(`src/${target}`)}...`);
+    // Trim leading and trailing "/"
+    target = target.replace(/^\/|\/$/g, '');
+    source = source.replace(/^\/|\/$/g, '');
+    process.stdout.write(`- Adding items to ${cyan(`src/${target}/${source}`)}...`);
     // Append the source directory name to the target path
     target = path.join(baseTargetDir, target, path.basename(source));
     source = path.join(baseSourceDir, source);

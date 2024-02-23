@@ -64,6 +64,7 @@ const mongoose: Plugin = {
             // Add the MONDODB_URL to the user's .env.local file
             writeToEnv('MONGODB_URL', url);
             await templateCopyTransfer('users', 'app/api');
+            await templateCopyTransfer('lib', 'app');
         } catch (error) {
             console.error('Failed to set up database for project:', error);
         }
