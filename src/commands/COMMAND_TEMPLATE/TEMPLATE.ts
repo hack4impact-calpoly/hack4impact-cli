@@ -1,9 +1,9 @@
 // import inquirer from 'inquirer';
-import createCommand from '../createCommand';
+import createCommand from '../createCommand.js';
 import pluginConfigFile from './plugins/config.json';
 
-import allPlugins from './plugins';
-import { ICommand } from 'types/ICommand';
+import allPlugins from './plugins/index.js';
+import { ICommand } from 'types/ICommand.js';
 
 /**
  * TEMPLATE

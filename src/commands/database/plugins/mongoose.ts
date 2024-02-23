@@ -1,11 +1,11 @@
 import inquirer from 'inquirer';
-import { Plugin } from 'types/plugin';
-import { NPM } from 'utils/package-manager';
-import { validateGitHubStatus } from 'utils/check-git';
+import { Plugin } from 'types/plugin.js';
+import { NPM } from 'utils/package-manager.js';
+import { validateGitHubStatus } from 'utils/check-git.js';
 import open from 'open';
 import colors from 'picocolors';
-import writeToEnv from 'utils/write-to-env';
-import { log, LogColor } from 'utils/logger';
+import writeToEnv from 'utils/write-to-env.js';
+import { log, LogColor } from 'utils/logger.js';
 import templateCopyTransfer from 'utils/template-copy-transfer.js';
 
 // MongoDB with Mongoose ORM

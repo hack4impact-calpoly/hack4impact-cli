@@ -1,4 +1,4 @@
-import { PluginRegistry, PluginConfigFile } from './plugin';
+import { PluginRegistry, PluginConfigFile } from './plugin.js';
 
 export interface ICommand {
     requiresProjectInitialized: boolean;

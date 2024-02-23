@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import execAsync from 'utils/exec-async';
-
+import execAsync from 'utils/exec-async.js';
 
 const templates = [
     { name: 'NextJS', url: 'https://github.com/hack4impact-calpoly/nextjs-app-template.git' },

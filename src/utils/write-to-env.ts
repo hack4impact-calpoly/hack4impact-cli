@@ -1,6 +1,6 @@
 import { existsSync, appendFileSync } from 'fs';
 import colors from 'picocolors';
-import { log, LogLevel } from 'utils/logger';
+import { log, LogLevel } from 'utils/logger.js';
 
 const envLocalPath = '.env.local';
 

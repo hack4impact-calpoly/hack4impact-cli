@@ -1,4 +1,4 @@
-import { Plugin } from 'types/plugin';
+import { Plugin } from 'types/plugin.js';
 import path from 'path';
 import fs from 'fs';
 

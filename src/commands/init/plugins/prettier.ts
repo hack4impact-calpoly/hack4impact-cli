@@ -1,7 +1,7 @@
-import { Plugin } from 'types/plugin';
+import { Plugin } from 'types/plugin.js';
 import fs from 'fs';
 import path from 'path';
-import { NPM } from 'utils/package-manager';
+import { NPM } from 'utils/package-manager.js';
 
 const VERBOSE = false;
 

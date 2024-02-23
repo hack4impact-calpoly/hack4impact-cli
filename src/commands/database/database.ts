@@ -1,10 +1,10 @@
 import inquirer from 'inquirer';
-import createCommand from '../createCommand';
+import createCommand from '../createCommand.js';
 import pluginConfigFile from './plugins/config.json';
 
-import allPlugins from './plugins';
-import { PluginRegistry } from 'types/plugin';
-import { ICommand } from 'types/ICommand';
+import allPlugins from './plugins/index.js';
+import { PluginRegistry } from 'types/plugin.js';
+import { ICommand } from 'types/ICommand.js';
 
 /**
  * Adds a database to the project by prompting the user to select a database option.
