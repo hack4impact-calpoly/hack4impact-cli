@@ -6,6 +6,7 @@ import open from 'open';
 import colors from 'picocolors';
 import writeToEnv from 'utils/write-to-env';
 import { log, LogColor } from 'utils/logger';
+import templateCopyTransfer from 'utils/template-copy-transfer.js';
 
 // MongoDB with Mongoose ORM
 const mongoose: Plugin = {
@@ -62,6 +63,7 @@ const mongoose: Plugin = {
             }
             // Add the MONDODB_URL to the user's .env.local file
             writeToEnv('MONGODB_URL', url);
+            await templateCopyTransfer('users', 'app/api');
         } catch (error) {
             console.error('Failed to set up database for project:', error);
         }
