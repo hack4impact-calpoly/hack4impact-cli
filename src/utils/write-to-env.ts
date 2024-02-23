@@ -1,6 +1,6 @@
-import { existsSync, appendFile } from 'fs';
+import { existsSync, appendFileSync } from 'fs';
 import colors from 'picocolors';
-import { log, LogLevel } from 'utils/logger';
+import { log, LogLevel } from 'utils/logger.js';
 
 const envLocalPath = '.env.local';
 
@@ -9,17 +9,16 @@ const envLocalPath = '.env.local';
  */
 export default function writeToEnv(key: string, value: string) {
     const { cyan } = colors;
-    // Check if the .env.local file exists
-    if (existsSync(envLocalPath)) {
-        // Append a new line to the .env.local file
-        appendFile(envLocalPath, `\n${key}=${value}\n`, (err) => {
-            if (err) {
-                console.error(`Failed to append ${key} to ${envLocalPath}:`, err);
-            } else {
-                log(`Added new line for ${cyan(key)} to ${envLocalPath} file.`, LogLevel.checkmark, undefined, true);
-            }
-        });
-    } else {
-        log(`${envLocalPath} file does not exist.`, LogLevel.error);
+    try {
+        // Check if the .env.local file exists
+        if (existsSync(envLocalPath)) {
+            // Append a new line to the .env.local file
+            appendFileSync(envLocalPath, `\n${key}=${value}\n`);
+            log(`Added new line for ${cyan(key)} to ${envLocalPath} file.`, LogLevel.checkmark, undefined, true);
+        } else {
+            log(`${cyan(envLocalPath)} file does not exist.`, LogLevel.error);
+        }
+    } catch (error) {
+        log(`Failed to write to ${cyan(envLocalPath)} file, appending ${cyan(key)}: ${error}`, LogLevel.error);
     }
 }

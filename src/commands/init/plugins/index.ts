@@ -1,7 +1,7 @@
-import eslint from './eslint';
-import prettier from './prettier';
-import husky from './husky';
-import jest from './jest';
+import eslint from './eslint.js';
+import prettier from './prettier.js';
+import husky from './husky.js';
+import jest from './jest.js';
 
 export default {
     eslint,

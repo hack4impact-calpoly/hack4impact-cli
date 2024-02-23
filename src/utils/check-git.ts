@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 import inquirer from 'inquirer';
 import colors from 'picocolors';
-import { log, LogLevel } from 'utils/logger';
+import { log, LogLevel } from 'utils/logger.js';
 
 /**
  * Validates the current Git repository status to ensure that the project can be deployed.

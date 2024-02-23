@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
-import { log, LogLevel, LogColor } from 'utils/logger';
+import { log, LogLevel, LogColor } from 'utils/logger.js';
 
 function isGitRepositorySimpleCheck(directory: string) {
     return fs.existsSync(path.join(directory, '.git'));

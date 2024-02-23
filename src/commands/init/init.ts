@@ -3,14 +3,14 @@ import path from 'path';
 import inquirer from 'inquirer';
 import { execSync } from 'child_process';
 import { chdir } from 'process';
-import installPlugins from 'utils/install-plugins';
+import installPlugins from 'utils/install-plugins.js';
 import colors from 'picocolors';
-import setupGitRepo from 'utils/setup-git-repo';
-import createCommand from '../createCommand';
-import { ICommand } from 'types/ICommand';
-import allPlugins from './plugins';
+import setupGitRepo from 'utils/setup-git-repo.js';
+import createCommand from '../createCommand.js';
+import { ICommand } from 'types/ICommand.js';
+import allPlugins from './plugins/index.js';
 import pluginConfigFile from './plugins/config.json';
-import { log, LogLevel, LogColor } from 'utils/logger';
+import { log, LogLevel, LogColor } from 'utils/logger.js';
 
 /**
  * Initializes a new project by prompting the user for a project name and a GitHub template.
