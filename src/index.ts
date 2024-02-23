@@ -8,9 +8,9 @@ import { hack4ImpactRcExists } from 'utils/read-config-file.js';
 import checkIfAnyDirectoryExists from 'utils/check-directory.js';
 import colors from 'picocolors';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { dirname } from 'path';
 
 program.name('hack4impact-cli').description('CLI to initialize and set up volunteer management systems');
 
@@ -36,27 +36,36 @@ if (!hack4ImpactRcExists()) {
         .action(() => {
             const __filename = fileURLToPath(import.meta.url);
             const __dirname = dirname(__filename);
-            console.log(__dirname);
-            const sourceFile = path.join(__dirname, 'hello.ts');
-            const targetDir = path.join(process.cwd(), 'src');
-            const targetFile = path.join(targetDir, 'hello.ts');
 
-            async function copyFile() {
-                try {
-                    // Ensure the target directory exists, create it if not
-                    await fs.mkdir(targetDir, { recursive: true });
+            // Specify the source directory and the target directory
+            const baseSourceDir = path.join(__dirname, 'template');
+            const baseTargetDir = path.join(process.cwd(), 'src');
 
-                    // Copy the file
-                    await fs.copyFile(sourceFile, targetFile);
+            async function copyDirectory(source: string, target: string, isFirstCall = true) {
+                if (isFirstCall) {
+                    // Only prepend base directories in the first call
+                    source = path.join(baseSourceDir, source);
+                    target = path.join(baseTargetDir, target);
+                }
 
-                    console.log(`File copied successfully to ${targetFile}`);
-                } catch (err) {
-                    console.error('Error copying the file:', err);
+                await fs.mkdir(target, { recursive: true });
+                const entries = await fs.readdir(source, { withFileTypes: true });
+
+                for (const entry of entries) {
+                    const srcPath = path.join(source, entry.name);
+                    const destPath = path.join(target, entry.name);
+
+                    if (entry.isDirectory()) {
+                        // For recursive calls, pass the paths directly without prepending base directories
+                        await copyDirectory(srcPath, destPath, false);
+                    } else {
+                        await fs.copyFile(srcPath, destPath);
+                    }
                 }
             }
-
-            // Execute the function
-            copyFile();
+            copyDirectory('users', 'app/api')
+                .then(() => console.log('Directory copied successfully.'))
+                .catch((error) => console.error('Error copying directory:', error));
         });
 }
 

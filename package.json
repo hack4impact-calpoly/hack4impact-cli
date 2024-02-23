@@ -14,11 +14,13 @@
     },
     "scripts": {
         "start": "node ./dist/index.js",
-        "build": "tsup src/index.ts && node src/scripts/copy-template-files.js",
+        "build": "tsup && node src/scripts/copy-template-files.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "prettier": "prettier --write",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts,.tsx",
-        "prepare": "husky"
+        "prepare": "husky",
+        "template": "node src/scripts/template-add-ts-nocheck.js",
+        "template:clear": "node src/scripts/template-remove-ts-nocheck.js"
     },
     "engines": {
         "node": ">=20.0.0"

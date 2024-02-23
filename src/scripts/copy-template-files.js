@@ -2,7 +2,7 @@ import shell from 'shelljs';
 
 // We don't want to compile the TypeScript files in the template directory
 
-const sourceDir = './src/template';
+const sourceDir = './_template';
 const targetDir = './dist/template';
 
 // Copying TypeScript files
