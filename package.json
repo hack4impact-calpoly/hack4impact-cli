@@ -14,7 +14,7 @@
     },
     "scripts": {
         "start": "node ./dist/index.js",
-        "build": "tsup",
+        "build": "tsup src/index.ts && node src/scripts/copy-template-files.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "prettier": "prettier --write",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts,.tsx",
@@ -40,15 +40,19 @@
         "picocolors": "^1.0.0"
     },
     "devDependencies": {
+        "@types/fs-extra": "^11.0.4",
         "@types/inquirer": "^9.0.7",
         "@types/node": "^20.11.17",
+        "@types/shelljs": "^0.8.15",
         "@typescript-eslint/eslint-plugin": "^7.0.1",
         "@typescript-eslint/parser": "^7.0.1",
         "eslint": "^8.56.0",
         "eslint-config-prettier": "^9.1.0",
+        "fs-extra": "^11.2.0",
         "husky": "^8.0.0",
         "lint-staged": "^15.2.2",
         "prettier": "^3.2.5",
+        "shelljs": "^0.8.5",
         "ts-node": "^10.9.2",
         "tsup": "^8.0.2",
         "typescript": "^5.3.3"
