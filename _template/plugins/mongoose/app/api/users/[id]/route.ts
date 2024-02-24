@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '../../../../lib/dbConnect';
-import User from '../../../../models/User';
-import { ApiWithIdParam } from '../../../../@types/types';
+import dbConnect from '@/lib/dbConnect';
+import User from '@/models/User';
+import { ApiWithIdParam } from '@/types/types';
 
 /* Get a model by its ID */
 export async function GET(req: NextRequest, { params }: ApiWithIdParam) {
@@ -16,12 +16,12 @@ export async function GET(req: NextRequest, { params }: ApiWithIdParam) {
 }
 
 /* Edit a model by its ID */
-export async function PUT(req: NextRequest) {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get('id');
+export async function PUT(req: NextRequest, { params }: ApiWithIdParam) {
+    const { id } = params;
     await dbConnect();
+    const body = await req.json();
     try {
-        const user = await User.findByIdAndUpdate(id, req.body, {
+        const user = await User.findByIdAndUpdate(id, body, {
             new: true,
             runValidators: true,
         });
@@ -35,9 +35,8 @@ export async function PUT(req: NextRequest) {
 }
 
 /* Delete a model by its ID */
-export async function DELETE(req: NextRequest) {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get('id');
+export async function DELETE(req: NextRequest, { params }: ApiWithIdParam) {
+    const { id } = params;
     await dbConnect();
     try {
         const deletedUser = await User.deleteOne({ _id: id });
