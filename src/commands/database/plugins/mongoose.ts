@@ -1,17 +1,16 @@
 import inquirer from 'inquirer';
-import { Plugin } from 'types/plugin';
-import { NPM } from 'utils/package-manager';
-import { validateGitHubStatus } from 'utils/check-git';
+import { Plugin } from 'types/plugin.js';
+import { NPM } from 'utils/package-manager.js';
 import open from 'open';
 import colors from 'picocolors';
-import writeToEnv from 'utils/write-to-env';
-import { log, LogColor } from 'utils/logger';
+import writeToEnv from 'utils/write-to-env.js';
+import { log, LogColor, LogLevel } from 'utils/logger.js';
+import templateCopyTransfer from 'utils/template-copy-transfer.js';
 
 // MongoDB with Mongoose ORM
 const mongoose: Plugin = {
     install: async () => {
         try {
-            await validateGitHubStatus();
             NPM.install('mongoose');
 
             // Prompt user to go to mongoDB website to set up project
@@ -62,6 +61,16 @@ const mongoose: Plugin = {
             }
             // Add the MONDODB_URL to the user's .env.local file
             writeToEnv('MONGODB_URL', url);
+            await templateCopyTransfer('plugins/mongoose', 'src');
+            NPM.installDev('swr');
+
+            log(
+                'Test the database connection at http://localhost:3000/test-database',
+                LogLevel.success,
+                undefined,
+                true
+            );
+            // await templateCopyTransfer('lib', 'app');
         } catch (error) {
             console.error('Failed to set up database for project:', error);
         }

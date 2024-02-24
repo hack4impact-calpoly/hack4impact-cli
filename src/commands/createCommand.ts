@@ -1,6 +1,6 @@
-import { ICommand } from 'types/ICommand';
-import { PluginRegistry, PluginConfigFile } from 'types/plugin';
-import { readConfig } from 'utils/read-config-file';
+import { ICommand } from 'types/ICommand.js';
+import { PluginRegistry, PluginConfigFile } from 'types/plugin.js';
+import { readConfig } from 'utils/read-config-file.js';
 
 export default function createCommand(config: {
     requiresProjectInitialized: boolean;

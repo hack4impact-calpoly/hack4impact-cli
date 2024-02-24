@@ -1,9 +1,9 @@
-import { PluginRegistry } from 'types/plugin';
-import { StringIndexableObject } from 'types/shared';
+import { PluginRegistry } from 'types/plugin.js';
+import { StringIndexableObject } from 'types/shared.js';
 import colors from 'picocolors';
 import fs from 'fs';
 import path from 'path';
-import { log, LogLevel, LogColor } from 'utils/logger';
+import { log, LogLevel, LogColor } from 'utils/logger.js';
 
 export default function installPlugins(plugins: PluginRegistry) {
     const cyan = colors.cyan;

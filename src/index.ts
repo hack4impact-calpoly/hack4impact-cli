@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import initProject from './commands/init/init';
-import addDatabase from './commands/database/database';
-import deploy from './commands/deploy/deploy';
-import { hack4ImpactRcExists } from 'utils/read-config-file';
-import checkIfAnyDirectoryExists from 'utils/check-directory';
+import initProject from './commands/init/init.js';
+import addDatabase from './commands/database/database.js';
+import deploy from './commands/deploy/deploy.js';
+import { hack4ImpactRcExists } from 'utils/read-config-file.js';
+import checkIfAnyDirectoryExists from 'utils/check-directory.js';
 import colors from 'picocolors';
 
 program.name('hack4impact-cli').description('CLI to initialize and set up volunteer management systems');

@@ -1,10 +1,10 @@
 import inquirer from 'inquirer';
 import colors from 'picocolors';
 import open from 'open';
-import { validateGitHubStatus } from 'utils/check-git';
-import { ICommand } from 'types/ICommand';
-import createCommand from '../createCommand';
-import allPlugins from './plugins';
+import { validateGitHubStatus } from 'utils/check-git.js';
+import { ICommand } from 'types/ICommand.js';
+import createCommand from '../createCommand.js';
+import allPlugins from './plugins/index.js';
 import pluginConfigFile from './plugins/config.json';
 
 const deploymentOptions = [

@@ -1,5 +1,5 @@
-import { Plugin } from 'types/plugin';
-import { NPM } from 'utils/package-manager';
+import { Plugin } from 'types/plugin.js';
+import { NPM } from 'utils/package-manager.js';
 import config from './config.json';
 import fs from 'fs';
 import path from 'path';
