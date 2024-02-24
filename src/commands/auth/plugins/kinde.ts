@@ -1,10 +1,10 @@
 import inquirer from 'inquirer';
+import colors from 'picocolors';
 import { Plugin } from 'types/plugin.js';
 import { NPM } from 'utils/package-manager.js';
 import templateCopyTransfer from 'utils/template-copy-transfer.js';
 import { log, LogLevel, LogColor } from 'utils/logger.js';
-import colors from 'picocolors';
-import open from 'open';
+import { askOpenPage } from 'utils/ask-open-page.js';
 
 const { bold, cyan } = colors;
 
@@ -19,7 +19,7 @@ const steps = [
 
 const kinde: Plugin = {
     install: async () => {
-        await askOpenPage('Kinde', 'https://kinde.com/');
+        await askOpenPage('Log in to Kinde then follow steps in this command line', 'https://kinde.com/');
         NPM.install('@kinde-oss/kinde-auth-nextjs');
         await templateCopyTransfer('plugins/kinde', 'src');
         log(`\nAfter logging in, ${bold('follow these steps')} on Kinde to complete setup:`, undefined, LogColor.cyan);
@@ -57,20 +57,5 @@ const kinde: Plugin = {
         log('Auth is now set up. It was that easy! 🎉', LogLevel.success, undefined, true);
     },
 };
-
-async function askOpenPage(name: string, url: string) {
-    const res = await inquirer.prompt([
-        {
-            type: 'confirm',
-            name: 'continue',
-            message: `\nLog in to ${name} to connect your project: ${cyan(url)}\nOpen page now?`,
-            default: true,
-        },
-    ]);
-    if (!res.continue) {
-        process.exit(1);
-    }
-    open(url);
-}
 
 export default kinde;

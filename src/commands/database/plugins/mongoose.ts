@@ -1,11 +1,10 @@
 import inquirer from 'inquirer';
 import { Plugin } from 'types/plugin.js';
 import { NPM } from 'utils/package-manager.js';
-import open from 'open';
-import colors from 'picocolors';
 import writeToEnv from 'utils/write-to-env.js';
 import { log, LogColor, LogLevel } from 'utils/logger.js';
 import templateCopyTransfer from 'utils/template-copy-transfer.js';
+import { askOpenPage } from 'utils/ask-open-page.js';
 
 // MongoDB with Mongoose ORM
 const mongoose: Plugin = {
@@ -14,7 +13,10 @@ const mongoose: Plugin = {
             NPM.install('mongoose');
 
             // Prompt user to go to mongoDB website to set up project
-            await askOpenPage('MongoDB', 'https://www.mongodb.com/cloud/atlas/register');
+            await askOpenPage(
+                'Log in to MongoDB to connect your project',
+                'https://www.mongodb.com/cloud/atlas/register'
+            );
             // Prompt user for & add to url .env
             log(
                 'Log in to your MongoDB Atlas account and copy the connection string, which can be found under:\n“Connect” > “Connecting with MongoDB for VS Code.”',
@@ -75,21 +77,5 @@ const mongoose: Plugin = {
         }
     },
 };
-
-async function askOpenPage(name: string, url: string) {
-    const { cyan } = colors;
-    const res = await inquirer.prompt([
-        {
-            type: 'confirm',
-            name: 'continue',
-            message: `\nLog in to ${name} to connect your project: ${cyan(url)}\nOpen page now?`,
-            default: true,
-        },
-    ]);
-    if (!res.continue) {
-        process.exit(1);
-    }
-    open(url);
-}
 
 export default mongoose;

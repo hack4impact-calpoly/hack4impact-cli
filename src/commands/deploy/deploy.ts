@@ -1,11 +1,10 @@
 import inquirer from 'inquirer';
-import colors from 'picocolors';
-import open from 'open';
 import { validateGitHubStatus } from 'utils/check-git.js';
 import { ICommand } from 'types/ICommand.js';
 import createCommand from '../createCommand.js';
 import allPlugins from './plugins/index.js';
 import pluginConfigFile from './plugins/config.json';
+import { askOpenPage } from 'utils/ask-open-page.js';
 
 const deploymentOptions = [
     {
@@ -39,8 +38,11 @@ const deploy: ICommand = createCommand({
                 try {
                     await validateGitHubStatus();
                     const selectedOption = deploymentOptions.find((option) => option.name === answers.target);
-                    // console.log(`Deploying to ${selectedOption.name}...`);
-                    if (selectedOption) askOpenPage(selectedOption.name, selectedOption.url);
+                    if (selectedOption)
+                        await askOpenPage(
+                            `Log in to ${selectedOption.name} to deploy your project`,
+                            selectedOption.url
+                        );
                 } catch (error) {
                     console.error('Failed to deploy project:', error);
                 }
@@ -50,21 +52,5 @@ const deploy: ICommand = createCommand({
             });
     },
 });
-
-async function askOpenPage(name: string, url: string) {
-    const { cyan } = colors;
-    const answers = await inquirer.prompt([
-        {
-            type: 'confirm',
-            name: 'continue',
-            message: `\nLog in to ${name} to deploy your project: ${cyan(url)}\nOpen page now?`,
-            default: true,
-        },
-    ]);
-    if (!answers.continue) {
-        process.exit(1);
-    }
-    open(url);
-}
 
 export default deploy;
