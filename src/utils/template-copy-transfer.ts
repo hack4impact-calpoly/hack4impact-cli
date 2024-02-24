@@ -1,37 +1,25 @@
-import { fileURLToPath } from 'url';
-import { promises as fs } from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import colors from 'picocolors';
+import colors from 'picocolors'; // Assuming 'colors' is already imported or installed
+
+const { cyan, green } = colors;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Specify the source directory and the target directory
 const baseSourceDir = path.join(__dirname, 'template');
-const baseTargetDir = path.join(process.cwd(), 'src');
+const baseTargetDir = path.join(process.cwd());
 
-const { cyan, green } = colors;
 /**
- * Copies the template files to the user's target directory. Base is inside src/
- * @param source
- * @param target
- * @param isFirstCall
+ * Recursively copies directories and files from source to target,
+ * logs actions for top-level directories only.
+ * @param {string} source The source directory.
+ * @param {string} target The target directory.
+ * @param {number} depth Current depth of recursion, top-level is 0.
  */
-export default async function templateCopyTransfer(source: string, target: string) {
-    // Trim leading and trailing "/"
-    target = target.replace(/^\/|\/$/g, '');
-    source = source.replace(/^\/|\/$/g, '');
-    process.stdout.write(`- Adding items to ${cyan(`src/${target}/${source}`)}...`);
-    // Append the source directory name to the target path
-    target = path.join(baseTargetDir, target, path.basename(source));
-    source = path.join(baseSourceDir, source);
-    await copyDirectoryRecursive(source, target);
-
-    process.stdout.write(green(' ✔ Done\n'));
-}
-
-async function copyDirectoryRecursive(source: string, target: string) {
+async function copyDirectoryRecursive(source: string, target: string, depth: number = 0) {
     await fs.mkdir(target, { recursive: true });
     const entries = await fs.readdir(source, { withFileTypes: true });
 
@@ -40,9 +28,36 @@ async function copyDirectoryRecursive(source: string, target: string) {
         const destPath = path.join(target, entry.name);
 
         if (entry.isDirectory()) {
-            await copyDirectoryRecursive(srcPath, destPath);
+            // Log only for top-level directories (depth == 0)
+            if (depth == 0) {
+                process.stdout.write(
+                    `- Adding items to ${cyan(destPath.replace(baseTargetDir + '/', '').concat('/'))} ... `
+                );
+            }
+            await copyDirectoryRecursive(srcPath, destPath, depth + 1);
         } else {
+            if (depth == 0) {
+                process.stdout.write(`- Adding ${cyan(destPath.replace(baseTargetDir + '/', ''))}`);
+            }
+            // Copy the file
             await fs.copyFile(srcPath, destPath);
         }
+        if (depth == 0) {
+            console.log(green('✔ Done'));
+        }
     }
+}
+
+/**
+ * Initiates the template copying process.
+ * @param {string} source Subdirectory in the base source directory.
+ * @param {string} target Subdirectory in the base target directory.
+ */
+export default async function templateCopyTransfer(source: string, target: string) {
+    target = target.replace(/^\/|\/$/g, '');
+    source = source.replace(/^\/|\/$/g, '');
+    target = path.join(baseTargetDir, target);
+    source = path.join(baseSourceDir, source);
+    await copyDirectoryRecursive(source, target);
+    // console.log(green('✔ Done'));
 }

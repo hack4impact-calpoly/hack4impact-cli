@@ -1,7 +1,6 @@
 import inquirer from 'inquirer';
 import { Plugin } from 'types/plugin.js';
 import { NPM } from 'utils/package-manager.js';
-import { validateGitHubStatus } from 'utils/check-git.js';
 import open from 'open';
 import colors from 'picocolors';
 import writeToEnv from 'utils/write-to-env.js';
@@ -12,7 +11,6 @@ import templateCopyTransfer from 'utils/template-copy-transfer.js';
 const mongoose: Plugin = {
     install: async () => {
         try {
-            await validateGitHubStatus();
             NPM.install('mongoose');
 
             // Prompt user to go to mongoDB website to set up project
@@ -63,8 +61,9 @@ const mongoose: Plugin = {
             }
             // Add the MONDODB_URL to the user's .env.local file
             writeToEnv('MONGODB_URL', url);
-            await templateCopyTransfer('users', 'app/api');
-            await templateCopyTransfer('lib', 'app');
+            await templateCopyTransfer('plugins/mongoose', 'src');
+            NPM.installDev('swr');
+            // await templateCopyTransfer('lib', 'app');
         } catch (error) {
             console.error('Failed to set up database for project:', error);
         }
