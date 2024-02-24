@@ -70,7 +70,6 @@ const mongoose: Plugin = {
                 undefined,
                 true
             );
-            // await templateCopyTransfer('lib', 'app');
         } catch (error) {
             console.error('Failed to set up database for project:', error);
         }

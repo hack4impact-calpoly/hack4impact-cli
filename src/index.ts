@@ -4,6 +4,7 @@ import { program } from 'commander';
 import initProject from './commands/init/init.js';
 import addDatabase from './commands/database/database.js';
 import deploy from './commands/deploy/deploy.js';
+import auth from './commands/auth/auth.js';
 import { hack4ImpactRcExists } from 'utils/read-config-file.js';
 import checkIfAnyDirectoryExists from 'utils/check-directory.js';
 import colors from 'picocolors';
@@ -26,6 +27,7 @@ if (!hack4ImpactRcExists()) {
     // Only show rest of commands if .hack4impactrc exists
     program.command('deploy').description('Deploy the project').action(deploy.execute);
     program.command('database').description('Add a database to the project').action(addDatabase.execute);
+    program.command('auth').description('Add authentication to the project').action(auth.execute);
 }
 
 program.parse(process.argv);
