@@ -4,7 +4,7 @@ import { NPM } from 'utils/package-manager.js';
 import open from 'open';
 import colors from 'picocolors';
 import writeToEnv from 'utils/write-to-env.js';
-import { log, LogColor } from 'utils/logger.js';
+import { log, LogColor, LogLevel } from 'utils/logger.js';
 import templateCopyTransfer from 'utils/template-copy-transfer.js';
 
 // MongoDB with Mongoose ORM
@@ -63,6 +63,13 @@ const mongoose: Plugin = {
             writeToEnv('MONGODB_URL', url);
             await templateCopyTransfer('plugins/mongoose', 'src');
             NPM.installDev('swr');
+
+            log(
+                'Test the database connection at http://localhost:3000/test-database',
+                LogLevel.success,
+                undefined,
+                true
+            );
             // await templateCopyTransfer('lib', 'app');
         } catch (error) {
             console.error('Failed to set up database for project:', error);

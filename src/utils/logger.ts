@@ -70,7 +70,7 @@ export function log(
     }
     switch (level) {
         case LogLevel.success:
-            console.log(green(`Success! ${text}`));
+            console.log(green('Success! ') + text);
             break;
         case LogLevel.checkmark:
             console.log(green('✔ ') + text);
