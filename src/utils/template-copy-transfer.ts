@@ -59,5 +59,4 @@ export default async function templateCopyTransfer(source: string, target: strin
     target = path.join(baseTargetDir, target);
     source = path.join(baseSourceDir, source);
     await copyDirectoryRecursive(source, target);
-    // console.log(green('✔ Done'));
 }
