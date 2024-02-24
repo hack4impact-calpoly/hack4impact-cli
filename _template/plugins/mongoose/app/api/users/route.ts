@@ -14,9 +14,9 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
     await dbConnect();
-    const data = await req.json();
+    const body = await req.json();
     try {
-        const user = await User.create(data); /* create a new model in the database */
+        const user = await User.create(body); /* create a new model in the database */
         return NextResponse.json(user, { status: 201 });
     } catch (error) {
         return NextResponse.json({ success: false, error }, { status: 400 });
