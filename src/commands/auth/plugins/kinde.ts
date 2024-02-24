@@ -46,7 +46,6 @@ const kinde: Plugin = {
         log('- Update env variables in .env.local', undefined, LogColor.yellow);
         log('- Add sign in and sign up buttons to your home page', undefined, LogColor.yellow);
 
-        // Inquier propmt to ask if they done
         await inquirer.prompt([
             {
                 type: 'confirm',
