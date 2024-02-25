@@ -6,6 +6,11 @@ import templateCopyTransfer from 'utils/template-copy-transfer.js';
 import { log, LogLevel, LogColor } from 'utils/logger.js';
 import { askOpenPage } from 'utils/ask-open-page.js';
 
+/**
+ * Kinde Auth with NextJS
+ * Docs: https://kinde.com/docs/developer-tools/nextjs-sdk/
+ */
+
 const { bold, cyan } = colors;
 
 const steps = [
