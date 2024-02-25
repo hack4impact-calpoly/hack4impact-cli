@@ -1,5 +1,5 @@
 # hack4impact-cli
-A project builder CLI for Next.js
+A project builder CLI for Next.js applications
 
 ## Usage:
 ```
