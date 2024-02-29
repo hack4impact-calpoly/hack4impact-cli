@@ -4,7 +4,6 @@ import pluginConfigFile from './plugins/config.json';
 import allPlugins from './plugins/index.js';
 import { PluginRegistry } from 'types/plugin.js';
 import { ICommand } from 'types/ICommand.js';
-import { validateGitHubStatus } from 'utils/check-git.js';
 
 /**
  * Adds a database to the project by prompting the user to select a database option.
@@ -22,7 +21,6 @@ const addDatabase: ICommand = createCommand({
             // { name: 'PostgreSQL', value: 'postgresql' },
             */
         ];
-        await validateGitHubStatus();
         try {
             const answers = await inquirer.prompt([
                 {
