@@ -29,13 +29,14 @@ function updatePackageJson(packageJsonAdditions: any) {
             'pre-commit': 'lint-staged',
         },
     };
-
     const scripts = ['npm run lint'];
 
     // If prettier is used in the project, make pre-commit hook run prettier as well
     config.plugins.prettier && scripts.push('npm run prettier');
+
+    // Why the !() syntax? It's a glob pattern to ignore the [kindeAuth] directory because ESLint doesn't like it
     packageJsonAdditions['lint-staged'] = {
-        'src/**': scripts,
+        '!(src/app/api/auth/[kindeAuth]/*)*.{ts,tsx}': scripts,
     };
 }
 
@@ -52,8 +53,8 @@ function createHuskyPreCommitHook() {
     fs.writeFileSync(
         preCommitFilePath,
         `#!/bin/sh
-  npx lint-staged
-  `,
+npx lint-staged
+`,
         { mode: 0o755, encoding: 'utf8' }
     );
 }
