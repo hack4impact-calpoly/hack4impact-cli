@@ -8,7 +8,7 @@ const VERBOSE = false;
 const prettier: Plugin = {
     install: (packageJsonAdditions) => {
         VERBOSE && console.log('Installing Prettier...');
-        NPM.installDev('prettier eslint-plugin-prettier');
+        NPM.installDev('prettier eslint-plugin-prettier eslint-config-prettier');
 
         VERBOSE && console.log('Configuring Prettier...');
         updateEslintConfig(process.cwd());

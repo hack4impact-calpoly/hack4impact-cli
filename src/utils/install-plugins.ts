@@ -51,5 +51,5 @@ function applyPackageJsonAdditions(updates: StringIndexableObject) {
     } catch (e) {
         console.error('Failed to write package.json:', e);
     }
-    log(`'package.json has been updated.`, LogLevel.checkmark, LogColor.cyan, true);
+    log(`package.json has been updated.`, LogLevel.checkmark, LogColor.cyan, true);
 }

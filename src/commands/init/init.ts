@@ -64,12 +64,14 @@ const initProject: ICommand = createCommand({
 
                     installPlugins(context.plugins);
 
+                    execSync('npm run prettier', { stdio: 'inherit' });
+
                     fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2), 'utf-8');
                     log(
                         `Config file .hack4impactrc created in ${configPath}`,
                         LogLevel.checkmark,
                         LogColor.cyan,
-                        undefined,
+                        true,
                         true
                     );
                     log(`Project ${cyan(projectName)} initialized.`, LogLevel.checkmark);
