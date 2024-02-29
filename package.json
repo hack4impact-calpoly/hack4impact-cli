@@ -37,6 +37,7 @@
     "homepage": "https://github.com/hack4impact-calpoly/hack4impact-cli#readme",
     "dependencies": {
         "commander": "^12.0.0",
+        "dotenv": "^16.4.5",
         "inquirer": "^9.2.14",
         "open": "^10.0.3",
         "picocolors": "^1.0.0"

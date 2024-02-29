@@ -5,6 +5,7 @@ import { NPM } from 'utils/package-manager.js';
 import templateCopyTransfer from 'utils/template-copy-transfer.js';
 import { log, LogLevel, LogColor } from 'utils/logger.js';
 import { askOpenPage } from 'utils/ask-open-page.js';
+import checkEnvVars from 'utils/check-env-vars.js';
 
 /**
  * Kinde Auth with NextJS
@@ -51,15 +52,31 @@ const kinde: Plugin = {
         log('- Update env variables in .env.local', undefined, LogColor.yellow);
         log('- Add sign in and sign up buttons to your home page', undefined, LogColor.yellow);
 
-        await inquirer.prompt([
-            {
-                type: 'confirm',
-                name: 'done',
-                message: 'Done?',
-                default: true,
-            },
-        ]);
-        log('Auth is now set up. It was that easy! 🎉', LogLevel.success, undefined, true);
+        let finishedEnv = false;
+        const requiredEnvVars: string[] = [
+            'KINDE_CLIENT_ID',
+            'KINDE_CLIENT_SECRET',
+            'KINDE_ISSUER_URL',
+            'KINDE_SITE_URL',
+            'KINDE_POST_LOGOUT_REDIRECT_URL',
+            'KINDE_POST_LOGIN_REDIRECT_URL',
+        ];
+        while (!finishedEnv) {
+            await inquirer.prompt([
+                {
+                    type: 'confirm',
+                    name: 'done',
+                    message: 'Done?',
+                    default: true,
+                },
+            ]);
+
+            if (checkEnvVars(requiredEnvVars)) {
+                log('Auth is now set up. It was that easy! 🎉', LogLevel.success, undefined, true);
+                finishedEnv = true;
+                break;
+            }
+        }
     },
 };
 
