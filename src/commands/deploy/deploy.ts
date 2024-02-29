@@ -1,10 +1,10 @@
 import inquirer from 'inquirer';
-import { validateGitHubStatus } from 'utils/check-git.js';
+import { validateGitHubStatus } from 'utils/git/check-git.js';
 import { ICommand } from 'types/ICommand.js';
 import createCommand from '../createCommand.js';
 import allPlugins from './plugins/index.js';
 import pluginConfigFile from './plugins/config.json';
-import { askOpenPage } from 'utils/ask-open-page.js';
+import { askOpenPage } from 'utils/inquirer/ask-open-page.js';
 
 const deploymentOptions = [
     {

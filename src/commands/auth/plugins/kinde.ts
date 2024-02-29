@@ -4,8 +4,8 @@ import { Plugin } from 'types/plugin.js';
 import { NPM } from 'utils/package-manager.js';
 import templateCopyTransfer from 'utils/template-copy-transfer.js';
 import { log, LogLevel, LogColor } from 'utils/logger.js';
-import { askOpenPage } from 'utils/ask-open-page.js';
-import checkEnvVars from 'utils/check-env-vars.js';
+import { askOpenPage } from 'utils/inquirer/ask-open-page.js';
+import checkEnvVars from 'utils/env/check-env-vars.js';
 
 /**
  * Kinde Auth with NextJS

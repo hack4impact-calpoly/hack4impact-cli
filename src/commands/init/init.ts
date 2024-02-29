@@ -5,7 +5,7 @@ import { execSync } from 'child_process';
 import { chdir } from 'process';
 import installPlugins from 'utils/install-plugins.js';
 import colors from 'picocolors';
-import setupGitRepo from 'utils/setup-git-repo.js';
+import setupGitRepo from 'utils/git/setup-git-repo.js';
 import createCommand from '../createCommand.js';
 import { ICommand } from 'types/ICommand.js';
 import allPlugins from './plugins/index.js';

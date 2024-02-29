@@ -1,10 +1,10 @@
 import inquirer from 'inquirer';
 import { Plugin } from 'types/plugin.js';
 import { NPM } from 'utils/package-manager.js';
-import writeToEnv from 'utils/write-to-env.js';
+import writeToEnv from 'utils/env/write-to-env.js';
 import { log, LogColor, LogLevel } from 'utils/logger.js';
 import templateCopyTransfer from 'utils/template-copy-transfer.js';
-import { askOpenPage } from 'utils/ask-open-page.js';
+import { askOpenPage } from 'utils/inquirer/ask-open-page.js';
 
 // MongoDB with Mongoose ORM
 const mongoose: Plugin = {
