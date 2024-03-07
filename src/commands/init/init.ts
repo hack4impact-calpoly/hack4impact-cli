@@ -46,7 +46,8 @@ const initProject: ICommand = createCommand({
                     const projectName = answers.projectName;
                     const projectPath = path.join(process.cwd(), projectName);
                     const configPath = path.join(projectPath, '.hack4impactrc');
-                    const defaultConfig = { projectName, projectPath };
+                    // const defaultConfig = { projectName, projectPath };
+                    const defaultConfig = { projectName };
 
                     if (!fs.existsSync(projectPath)) {
                         fs.mkdirSync(projectPath, { recursive: true });
