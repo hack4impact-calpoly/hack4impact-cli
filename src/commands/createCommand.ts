@@ -19,7 +19,7 @@ export default function createCommand(config: {
             if (requiresProjectInitialized) {
                 const config = readConfig();
 
-                if (!config || !config.projectPath) {
+                if (!config) {
                     console.error('Project is not initialized.');
                     process.exit(1);
                 }
